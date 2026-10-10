@@ -92,7 +92,7 @@ export function renderPagarView(chargeId) {
           <span style="font-size:0.82rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em;">Beneficiário</span>
           <h3 style="font-size:1.15rem; color:var(--text-main); margin-top:2px;">${ownerName}</h3>
 
-          <div style="font-size:2.4rem; font-weight:800; color:#ffffff; letter-spacing:-0.02em; margin:10px 0;">
+          <div class="tabular-nums val-cyan-highlight" style="font-size:2.4rem; font-weight:800; letter-spacing:-0.02em; margin:10px 0;">
             ${formatBrl(charge.valor)}
           </div>
 
@@ -119,17 +119,17 @@ export function renderPagarView(chargeId) {
 
             <div class="timeline-step ${step1Class}">
               <div class="timeline-dot">1</div>
-              <span class="timeline-label">Aguardando pagamento</span>
+              <span class="timeline-label"><span class="status-dot status-dot-amber" style="width:5px; height:5px; display:inline-block; vertical-align:middle; margin-right:4px;"></span>Aguardando pagamento</span>
             </div>
 
             <div class="timeline-step ${step2Class}">
               <div class="timeline-dot">2</div>
-              <span class="timeline-label">Pix Confirmado</span>
+              <span class="timeline-label"><span class="status-dot status-dot-green" style="width:5px; height:5px; display:inline-block; vertical-align:middle; margin-right:4px;"></span>Pix Confirmado</span>
             </div>
 
             <div class="timeline-step ${step3Class}">
               <div class="timeline-dot">3</div>
-              <span class="timeline-label">DePix Enviado</span>
+              <span class="timeline-label"><span class="status-dot status-dot-emerald" style="width:5px; height:5px; display:inline-block; vertical-align:middle; margin-right:4px;"></span>DePix Enviado</span>
             </div>
           </div>
         </div>

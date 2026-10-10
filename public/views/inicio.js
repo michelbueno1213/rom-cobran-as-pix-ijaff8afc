@@ -39,7 +39,7 @@ export function renderInicioView(currentUser) {
           </div>
         </div>
 
-        <div class="tabular-nums" style="font-size:3.2rem; font-weight:800; color:#ffffff; letter-spacing:-0.035em; margin: 4px 0 12px 0; text-shadow: 0 0 32px rgba(16, 185, 129, 0.25);">
+        <div class="tabular-nums val-cyan-highlight" style="font-size:3.2rem; font-weight:800; letter-spacing:-0.035em; margin: 4px 0 12px 0;">
           R$ 0,00
         </div>
 
@@ -119,7 +119,7 @@ export function renderInicioView(currentUser) {
           </a>
 
           <a href="#/saques" class="card" style="padding:18px; text-decoration:none; display:flex; align-items:center; gap:14px; transition:all 0.15s ease;">
-            <div style="color:var(--accent-amber); background:var(--accent-amber-subtle); padding:10px; border-radius:var(--radius-md);">
+            <div style="color:var(--accent-emerald); background:var(--accent-emerald-subtle); padding:10px; border-radius:var(--radius-md);">
               ${Icons.withdraw(22)}
             </div>
             <div>

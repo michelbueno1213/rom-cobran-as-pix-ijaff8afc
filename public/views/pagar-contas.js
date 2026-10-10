@@ -162,7 +162,7 @@ export function renderPagarContasView(currentUser) {
                 </div>
                 <div style="text-align:right;">
                   <strong style="color:var(--text-main);">${p.valor}</strong>
-                  <span class="badge badge-amber" style="display:block; margin-top:4px;">Aguardando Envio</span>
+                  <span class="badge badge-amber" style="display:block; margin-top:4px;"><span class="status-dot status-dot-amber"></span>Aguardando Envio</span>
                 </div>
               </div>
             `,

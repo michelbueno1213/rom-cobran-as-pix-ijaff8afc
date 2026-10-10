@@ -82,15 +82,21 @@ export function renderLandingView() {
         <div class="landing-nav-actions">
           <a href="#/privacidade" class="btn btn-outline btn-sm">Privacidade</a>
           <a href="#/entrar" class="btn btn-secondary btn-sm">Acessar painel</a>
-          <a href="#/criar-conta" class="btn btn-premium-teal btn-sm">Criar conta</a>
+          <a href="#/criar-conta" class="btn btn-premium-teal btn-sm">Criar conta grátis</a>
         </div>
       </header>
 
       <!-- HERO SECTION (TEXTOS EXATOS VERBATIM) -->
       <section class="landing-hero reveal-on-scroll">
-        <div class="hero-pill">
-          <span class="hero-pill-dot"></span>
-          <span>Pix ⇄ DePix na rede Liquid</span>
+        <div style="display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:26px;">
+          <div class="hero-pill" style="margin-bottom:0;">
+            <span class="hero-pill-dot"></span>
+            <span>Pix ⇄ DePix na rede Liquid</span>
+          </div>
+          <div class="liquid-status-badge">
+            <span class="status-dot status-dot-green" style="width:6px; height:6px;"></span>
+            <span>liquid-network: online</span>
+          </div>
         </div>
 
         <h1 class="hero-title">
@@ -103,7 +109,7 @@ export function renderLandingView() {
         </p>
 
         <div class="hero-actions">
-          <a href="#/criar-conta" class="btn btn-premium-teal btn-lg">Criar conta</a>
+          <a href="#/criar-conta" class="btn btn-premium-teal btn-lg hero-cta-btn">Criar conta grátis</a>
           <a href="#/entrar" class="btn btn-premium-dark btn-lg">Acessar painel</a>
         </div>
 
@@ -149,13 +155,12 @@ export function renderLandingView() {
 
                 <div class="mockup-amount-display">
                   <span style="font-size:0.7rem; color:#64748b; text-transform:uppercase; letter-spacing:0.06em;">Valor da Cobrança</span>
-                  <span class="mockup-amount-num">R$ 1.850,00</span>
+                  <span class="mockup-amount-num tabular-nums val-cyan-highlight">R$ 1.850,00</span>
                   <div class="mockup-amount-tag">
                     ${Icons.zap(12)}
-                    <span>1.850,00 DePix (1:1 BRL)</span>
+                    <span class="tabular-nums">1.850,00 DePix (1:1 BRL)</span>
                   </div>
                 </div>
-
                 <div>
                   <div style="font-size:0.68rem; color:#64748b; margin-bottom:4px; font-weight:500;">Carteira Liquid Destino</div>
                   <div class="mockup-dest-address">lq1qq2m8x9p2z84k2m7d3c0v1a8j...3w9f</div>
@@ -209,8 +214,8 @@ export function renderLandingView() {
                         </div>
                       </div>
                       <div class="mockup-tx-right">
-                        <div class="mockup-tx-val">+ 3.200,00 DePix</div>
-                        <span class="mockup-badge-liquidated">Liquidado</span>
+                        <div class="mockup-tx-val tabular-nums val-cyan-highlight">+ 3.200,00 DePix</div>
+                        <span class="mockup-badge-liquidated"><span class="status-dot status-dot-emerald" style="width:5px; height:5px;"></span> Liquidado</span>
                       </div>
                     </div>
 
@@ -223,22 +228,22 @@ export function renderLandingView() {
                         </div>
                       </div>
                       <div class="mockup-tx-right">
-                        <div class="mockup-tx-val">+ 850,00 DePix</div>
-                        <span class="mockup-badge-liquidated">Liquidado</span>
+                        <div class="mockup-tx-val tabular-nums val-cyan-highlight">+ 850,00 DePix</div>
+                        <span class="mockup-badge-liquidated"><span class="status-dot status-dot-emerald" style="width:5px; height:5px;"></span> Liquidado</span>
                       </div>
                     </div>
 
                     <div class="mockup-tx-item">
                       <div class="mockup-tx-left">
-                        <div class="mockup-tx-icon" style="color:#fbbf24; background:rgba(245,158,11,0.12);">${Icons.repeat(14)}</div>
+                        <div class="mockup-tx-icon" style="color:var(--accent-amber); background:var(--accent-amber-subtle);">${Icons.repeat(14)}</div>
                         <div>
                           <div class="mockup-tx-desc">Ordem de Recebimento #8490</div>
                           <div class="mockup-tx-time">Hoje às 12:45 • Aguardando Pix</div>
                         </div>
                       </div>
                       <div class="mockup-tx-right">
-                        <div class="mockup-tx-val" style="color:#94a3b8;">1.850,00 DePix</div>
-                        <span class="mockup-badge-waiting">Pendente</span>
+                        <div class="mockup-tx-val tabular-nums" style="color:#94a3b8;">1.850,00 DePix</div>
+                        <span class="mockup-badge-waiting"><span class="status-dot status-dot-amber" style="width:5px; height:5px;"></span> Pendente</span>
                       </div>
                     </div>
                   </div>
@@ -509,8 +514,8 @@ export function renderLandingView() {
                       </div>
                     </div>
                     <div class="mockup-tx-right">
-                      <div class="mockup-tx-val">R$ 5.400,00</div>
-                      <span class="mockup-badge-liquidated">Liquidado</span>
+                      <div class="mockup-tx-val tabular-nums val-cyan-highlight">R$ 5.400,00</div>
+                      <span class="mockup-badge-liquidated"><span class="status-dot status-dot-emerald" style="width:5px; height:5px;"></span> Liquidado</span>
                     </div>
                   </div>
 
@@ -523,22 +528,22 @@ export function renderLandingView() {
                       </div>
                     </div>
                     <div class="mockup-tx-right">
-                      <div class="mockup-tx-val">R$ 1.250,00</div>
-                      <span class="mockup-badge-liquidated">Liquidado</span>
+                      <div class="mockup-tx-val tabular-nums val-cyan-highlight">R$ 1.250,00</div>
+                      <span class="mockup-badge-liquidated"><span class="status-dot status-dot-emerald" style="width:5px; height:5px;"></span> Liquidado</span>
                     </div>
                   </div>
 
                   <div class="mockup-tx-item">
                     <div class="mockup-tx-left">
-                      <div class="mockup-tx-icon" style="color:#fbbf24; background:rgba(245,158,11,0.12);">${Icons.repeat(14)}</div>
+                      <div class="mockup-tx-icon" style="color:var(--accent-amber); background:var(--accent-amber-subtle);">${Icons.repeat(14)}</div>
                       <div>
                         <div class="mockup-tx-desc">Fatura Corporativa #9919</div>
                         <div class="mockup-tx-time">QR Code gerado • Expira em 25 minutos</div>
                       </div>
                     </div>
                     <div class="mockup-tx-right">
-                      <div class="mockup-tx-val" style="color:#94a3b8;">R$ 9.800,00</div>
-                      <span class="mockup-badge-waiting">Aguardando Pix</span>
+                      <div class="mockup-tx-val tabular-nums" style="color:#94a3b8;">R$ 9.800,00</div>
+                      <span class="mockup-badge-waiting"><span class="status-dot status-dot-amber" style="width:5px; height:5px;"></span> Aguardando Pix</span>
                     </div>
                   </div>
                 </div>
@@ -601,7 +606,7 @@ export function renderLandingView() {
             Pronto para receber via Pix diretamente na sua carteira Liquid, com discrição tecnológica, autonomia e sem intermediações desnecessárias.
           </p>
           <div class="final-cta-actions">
-            <a href="#/criar-conta" class="btn btn-premium-teal btn-lg">Criar conta</a>
+            <a href="#/criar-conta" class="btn btn-premium-teal btn-lg hero-cta-btn">Criar conta grátis</a>
             <a href="#/entrar" class="btn btn-premium-dark btn-lg">Acessar painel</a>
           </div>
         </div>

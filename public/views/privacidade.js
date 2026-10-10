@@ -20,7 +20,7 @@ export function renderPrivacidadeView() {
         </a>
         <div style="display:flex; align-items:center; gap:12px;">
           <a href="#/entrar" class="btn btn-outline btn-sm">Entrar</a>
-          <a href="#/criar-conta" class="btn btn-primary btn-sm">Criar conta</a>
+          <a href="#/criar-conta" class="btn btn-primary btn-sm">Criar conta grátis</a>
         </div>
       </header>
 

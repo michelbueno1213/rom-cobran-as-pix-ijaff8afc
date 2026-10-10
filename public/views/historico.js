@@ -18,8 +18,9 @@ export function getChargeBadge(status) {
     case 'Em Análise':
       return `<span class="badge badge-blue"><span class="status-dot status-dot-blue"></span>${status}</span>`
     case 'Pix Confirmado':
-    case 'DePix Enviado':
       return `<span class="badge badge-green"><span class="status-dot status-dot-green"></span>${status}</span>`
+    case 'DePix Enviado':
+      return `<span class="badge badge-emerald"><span class="status-dot status-dot-emerald"></span>${status}</span>`
     case 'Atrasada':
     case 'Erro':
       return `<span class="badge badge-red"><span class="status-dot status-dot-red"></span>${status}</span>`
@@ -39,7 +40,7 @@ export function getWithdrawalBadge(status) {
     case 'Em Revisão':
       return `<span class="badge badge-blue"><span class="status-dot status-dot-blue"></span>${status}</span>`
     case 'Pix Enviado':
-      return `<span class="badge badge-green"><span class="status-dot status-dot-green"></span>${status}</span>`
+      return `<span class="badge badge-emerald"><span class="status-dot status-dot-emerald"></span>${status}</span>`
     case 'Erro':
       return `<span class="badge badge-red"><span class="status-dot status-dot-red"></span>${status}</span>`
     case 'Estornado':
@@ -56,7 +57,7 @@ export function getBillBadge(status) {
     case 'Em Revisão':
       return `<span class="badge badge-blue"><span class="status-dot status-dot-blue"></span>${status}</span>`
     case 'Conta Paga':
-      return `<span class="badge badge-green"><span class="status-dot status-dot-green"></span>${status}</span>`
+      return `<span class="badge badge-emerald"><span class="status-dot status-dot-emerald"></span>${status}</span>`
     case 'Erro':
       return `<span class="badge badge-red"><span class="status-dot status-dot-red"></span>${status}</span>`
     case 'Estornado':
@@ -191,11 +192,11 @@ export function renderHistoricoView(currentUser) {
                     } else if (item.tipo === 'saque') {
                       badgeHtml = getWithdrawalBadge(item.status || 'Aguardando Envio')
                       tipoLabel = 'Saque DePix'
-                      badgeClass = 'badge-amber'
+                      badgeClass = 'badge-emerald'
                     } else if (item.tipo === 'conta') {
                       badgeHtml = getBillBadge(item.status || 'Aguardando Envio')
                       tipoLabel = 'Pagamento de Conta'
-                      badgeClass = 'badge-amber'
+                      badgeClass = 'badge-cyan'
                     } else if (item.tipo === 'cupom') {
                       badgeHtml =
                         '<span class="badge badge-green"><span class="status-dot status-dot-green"></span>Ativo</span>'
@@ -220,7 +221,7 @@ export function renderHistoricoView(currentUser) {
                       <td style="padding:14px 20px;">
                         ${badgeHtml}
                       </td>
-                      <td style="padding:14px 20px; text-align:right; font-weight:700; color:var(--text-main);">
+                      <td class="tabular-nums val-cyan-highlight" style="padding:14px 20px; text-align:right; font-weight:700;">
                         ${typeof item.valor === 'number' ? formatBrl(item.valor) : item.valor || '—'}
                       </td>
                     </tr>

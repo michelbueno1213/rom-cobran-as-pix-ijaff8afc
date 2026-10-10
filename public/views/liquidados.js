@@ -55,7 +55,7 @@ export function renderLiquidadosView(currentUser) {
         <div style="display:flex; justify-content:space-between; align-items:flex-start;">
           <div>
             <span class="badge badge-green" style="margin-bottom:12px;"><span class="status-dot status-dot-green"></span>Volume Total Liquidado</span>
-            <div class="tabular-nums" style="font-size:3.4rem; font-weight:800; color:#ffffff; letter-spacing:-0.035em; margin: 4px 0 12px 0; text-shadow: 0 0 32px rgba(16, 185, 129, 0.25);">
+            <div class="tabular-nums val-cyan-highlight" style="font-size:3.4rem; font-weight:800; letter-spacing:-0.035em; margin: 4px 0 12px 0;">
               R$ 0,00
             </div>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0; line-height:1.55;">
@@ -100,7 +100,7 @@ export function renderLiquidadosView(currentUser) {
                 </div>
 
                 <div style="text-align:right;">
-                  <span style="display:block; font-size:1.15rem; font-weight:800; color:var(--text-main);">
+                  <span class="tabular-nums val-cyan-highlight" style="display:block; font-size:1.15rem; font-weight:800;">
                     R$ 0,00
                   </span>
                   <span style="font-size:0.72rem; color:var(--text-muted);">0 transações</span>
