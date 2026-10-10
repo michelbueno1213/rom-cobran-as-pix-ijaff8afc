@@ -1,13 +1,16 @@
 /**
  * View: Suporte (#/suporte)
- * Contato (e-mail e WhatsApp como texto/ícone)
- * FAQ em acordeão com 3 perguntas exigidas:
- * 1. "O que é DePix?"
- * 2. "O que é a rede Liquid?"
- * 3. "Quando poderei gerar cobranças?"
+ * Atualizada:
+ * - Banner no topo com mensagem de privacidade:
+ *   "Suporte que respeita sua privacidade. IA 24 horas para dúvidas rápidas e gente de verdade quando importa."
+ * - Seção "Precisa de ajuda agora?" com botão "Falar com o assistente ROM" -> exibe estado "Em breve"
+ * - FAQ em acordeão existente mantido + 2 novas perguntas:
+ *   1. "Preciso de KYC para usar a ROM?"
+ *   2. "Quais ativos a ROM suporta?"
  */
 
 import { Icons } from '../icons.js'
+import { showEmBreveToast } from '../toast.js'
 
 let openFaqIdx = null
 
@@ -25,19 +28,56 @@ export function renderSuporteView() {
       q: 'Quando poderei gerar cobranças?',
       a: 'Estamos finalizando nossa integração com a provedora de pagamentos. Assim que as credenciais forem liberadas e validadas, a emissão real de cobranças Pix e a liquidação em DePix estarão plenamente operacionais.',
     },
+    {
+      q: 'Preciso de KYC para usar a ROM?',
+      a: 'Não para começar. Você pode abrir sua conta e cadastrar suas carteiras sem expor dados sensíveis ou fotos de documentos. Procedimentos adicionais de KYC só ocorrerão se a provedora parceira de liquidação bancária vier a exigir por força regulatória, e você será previamente avisado.',
+    },
+    {
+      q: 'Quais ativos a ROM suporta?',
+      a: 'A ROM suporta DePix (Liquid), USDT (Polygon, Solana, Ethereum, Tron, Arbitrum, Liquid), USDC (Ethereum, Polygon, Solana, BNB Smart Chain, Base), BTC (Liquid, Onchain, Lightning) e USDG (xLayer).',
+    },
   ]
 
   return `
     <div style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:24px;">
       <div>
         <h1 style="margin-bottom:6px;">Suporte & Atendimento</h1>
-        <p>Tire suas dúvidas sobre o funcionamento do ecossistema Pix → DePix e contate nosso time.</p>
+        <p>Tire suas dúvidas sobre o ecossistema Pix → DePix e contate nosso time.</p>
+      </div>
+
+      <!-- BANNER DE PRIVACIDADE NO TOPO -->
+      <div class="banner-amber" style="border-left:4px solid var(--accent-emerald);">
+        ${Icons.shield(22)}
+        <div>
+          <strong style="display:block; margin-bottom:2px; color:#fde68a;">Atendimento soberano</strong>
+          <span>Suporte que respeita sua privacidade. IA 24 horas para dúvidas rápidas e gente de verdade quando importa.</span>
+        </div>
+      </div>
+
+      <!-- SEÇÃO ASSISTENTE IA ROM -->
+      <div class="card" style="background:linear-gradient(135deg, #131c2e 0%, #17243c 100%); border-color:rgba(59, 130, 246, 0.3);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="badge badge-blue">Inteligência Artificial 24h</span>
+            </div>
+            <h3 style="font-size:1.15rem; margin-bottom:4px;">Precisa de ajuda agora?</h3>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:0;">
+              Nosso assistente virtual tira dúvidas sobre carteiras, redes e liquidação instantaneamente.
+            </p>
+          </div>
+
+          <button type="button" id="btn-assistente-rom" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
+            ${Icons.bot(18)}
+            Falar com o assistente ROM
+          </button>
+        </div>
       </div>
 
       <!-- CANAIS DE CONTATO -->
       <div class="card">
         <h2 class="card-title">${Icons.helpCircle(20)} Canais Oficiais</h2>
-        <p class="card-desc">Nosso suporte atende de segunda a sexta, das 09h às 18h (horário de Brasília).</p>
+        <p class="card-desc">Gente de verdade quando importa: atendimento de segunda a sexta, das 09h às 18h (horário de Brasília).</p>
 
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px;">
           <div style="padding:16px; background:rgba(11, 18, 32, 0.6); border:1px solid var(--border-subtle); border-radius:var(--radius-md); display:flex; align-items:center; gap:14px;">
@@ -65,7 +105,7 @@ export function renderSuporteView() {
       <!-- FAQ EM ACORDEÃO -->
       <div class="card">
         <h2 class="card-title">${Icons.zap(20)} Perguntas Frequentes (FAQ)</h2>
-        <p class="card-desc">Respostas diretas sobre tecnologia, liquidação e cronograma do ROM.</p>
+        <p class="card-desc">Respostas diretas sobre tecnologia, liquidação, privacidade e cronograma do ROM.</p>
 
         <div style="display:flex; flex-direction:column; gap:10px;">
           ${faqs
@@ -104,6 +144,14 @@ export function renderSuporteView() {
 }
 
 export function initSuporteEvents(currentUser, reRender) {
+  // Botão assistente ROM dispara toast "Em breve"
+  const btnAssistente = document.getElementById('btn-assistente-rom')
+  if (btnAssistente) {
+    btnAssistente.addEventListener('click', () => {
+      showEmBreveToast()
+    })
+  }
+
   document.querySelectorAll('.btn-faq').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const idx = parseInt(e.currentTarget.getAttribute('data-idx'), 10)

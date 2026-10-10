@@ -2,7 +2,8 @@
  * View: Configurações (#/config)
  * Dados do comerciante: nome, e-mail (desabilitado), telefone, CNPJ opcional
  * Botão "Salvar" com toast "Dados salvos."
- * Seção "Integração & API" com nota exata: "Chaves de API e webhooks serão liberadas junto com a integração de pagamentos."
+ * Atualização: Bloco "Privacidade" explicando que coletamos o mínimo (sem KYC para começar)
+ * Seção "Integração & API" com nota exata
  */
 
 import { Icons } from '../icons.js'
@@ -38,7 +39,7 @@ export function renderConfigView(currentUser) {
 
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;" class="config-grid">
             <div class="form-group">
-              <label class="form-label" for="config-telefone">Telefone / WhatsApp</label>
+              <label class="form-label" for="config-telefone">Telefone / WhatsApp (opcional)</label>
               <input type="text" id="config-telefone" class="form-input" placeholder="(11) 98765-4321" value="${settings.telefone || ''}" />
             </div>
 
@@ -52,6 +53,32 @@ export function renderConfigView(currentUser) {
             Salvar
           </button>
         </form>
+      </div>
+
+      <!-- BLOCO PRIVACIDADE (NOVA IDENTIDADE VISUAL ROM) -->
+      <div class="card" style="border-left:4px solid var(--accent-emerald);">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <div style="color:var(--accent-emerald);">${Icons.shield(22)}</div>
+          <h2 class="card-title" style="margin:0;">Privacidade por Design</h2>
+        </div>
+        <p class="card-desc" style="margin-bottom:14px;">
+          Na ROM você começa sem expor dados sensíveis. Apenas nome, e-mail e senha são necessários para operar.
+        </p>
+
+        <div style="padding:14px 18px; background:rgba(16, 185, 129, 0.06); border:1px solid rgba(16, 185, 129, 0.2); border-radius:var(--radius-md); font-size:0.88rem; color:#cbd5e1; line-height:1.5;">
+          <p style="margin-bottom:8px; color:#ffffff; font-weight:600;">
+            Você pode começar sem expor dados sensíveis. KYC só se a provedora de pagamentos exigir, e você será avisado antes.
+          </p>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+            Campos como CNPJ e telefone são 100% opcionais e nunca serão bloqueadores para recebimentos na sua carteira Liquid.
+          </p>
+        </div>
+
+        <div style="margin-top:14px;">
+          <a href="#/privacidade" style="font-size:0.85rem; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+            Conhecer nossa política completa de privacidade ${Icons.externalLink(14)}
+          </a>
+        </div>
       </div>
 
       <!-- INTEGRAÇÃO & API -->

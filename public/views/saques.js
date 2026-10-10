@@ -1,6 +1,8 @@
 /**
  * View: Saques (#/saques)
  * Texto exato: "Você envia DePix da sua carteira Liquid para o endereço do saque e o valor equivalente cai na chave Pix informada."
+ * Atualização paridade DeFlow:
+ * - Dropdown "Ativo de saque" (multi-ativos, padrão DePix Liquid)
  * Valor (R$) com máscara BRL
  * Chave Pix com tipo (CPF, CNPJ, e-mail, telefone, aleatória) + favorecido opcional
  * Botão "Solicitar Saque" dispara "Em breve" (bloqueado)
@@ -8,7 +10,7 @@
  */
 
 import { Icons } from '../icons.js'
-import { attachBrlMask } from '../utils.js'
+import { attachBrlMask, MULTI_ASSETS } from '../utils.js'
 import { showEmBreveToast } from '../toast.js'
 
 export function renderSaquesView() {
@@ -23,10 +25,21 @@ export function renderSaquesView() {
 
       <!-- FORMULÁRIO DE SAQUE -->
       <div class="card">
-        <h2 class="card-title">${Icons.withdraw(20)} Solicitar Conversão DePix → Pix</h2>
-        <p class="card-desc">Informe o valor e a chave Pix bancária de destino.</p>
+        <h2 class="card-title">${Icons.withdraw(20)} Solicitar Conversão Cripto → Pix</h2>
+        <p class="card-desc">Informe o ativo de origem, o valor e a chave Pix bancária de destino.</p>
 
         <form id="form-saque" novalidate>
+          <!-- ATIVO DE ORIGEM DO SAQUE -->
+          <div class="form-group">
+            <label class="form-label" for="saque-asset">Ativo de origem</label>
+            <select id="saque-asset" class="form-select">
+              ${MULTI_ASSETS.map(
+                (a) =>
+                  `<option value="${a.id}" ${a.id === 'depix_liquid' ? 'selected' : ''}>${a.label}</option>`,
+              ).join('')}
+            </select>
+          </div>
+
           <div class="form-group">
             <label class="form-label" for="saque-valor">Valor (R$)</label>
             <input

@@ -1,6 +1,11 @@
 /**
  * Componente de Layout do Painel
  * Sidebar fixa (desktop) / Bottom Nav (mobile) / Rodapé fixo / Menu Homologação condicional
+ * Atualizado com paridade DeFlow:
+ * - Pagar Contas (#/pagar-contas) entre Saques e Histórico
+ * - Trocar (#/trocar) entre Carteiras Liquid e Valores Liquidados
+ * - Cupons (#/cupons) na seção Conta
+ * - Link "Privacidade" no rodapé do painel
  */
 
 import { Icons } from '../icons.js'
@@ -14,12 +19,15 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
     { route: '#/nova-cobranca', label: 'Nova Cobrança', icon: Icons.plusCircle() },
     { route: '#/links', label: 'Meus Links', icon: Icons.link() },
     { route: '#/saques', label: 'Saques', icon: Icons.withdraw() },
+    { route: '#/pagar-contas', label: 'Pagar Contas', icon: Icons.receipt() },
     { route: '#/historico', label: 'Histórico', icon: Icons.history() },
     { route: '#/carteiras', label: 'Carteiras Liquid', icon: Icons.wallet() },
+    { route: '#/trocar', label: 'Trocar (Swap)', icon: Icons.repeat() },
   ]
 
   const accountItems = [
     { route: '#/liquidados', label: 'Valores Liquidados', icon: Icons.checkCircle() },
+    { route: '#/cupons', label: 'Cupons', icon: Icons.tag() },
     { route: '#/config', label: 'Configurações', icon: Icons.settings() },
     { route: '#/suporte', label: 'Suporte', icon: Icons.helpCircle() },
   ]
@@ -91,6 +99,11 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
         </nav>
 
         <div class="sidebar-footer">
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; margin-bottom:4px;">
+            <a href="#/privacidade" style="color:var(--accent-emerald); font-weight:600; text-decoration:none;">
+              ${Icons.shield(14)} Privacidade na ROM
+            </a>
+          </div>
           <div class="sidebar-disclaimer">
             ${MSG_RODAPE}
           </div>
@@ -115,6 +128,8 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
             <span style="font-weight:800; font-size:1.1rem; color:var(--text-main);">ROM</span>
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
+            <a href="#/pagar-contas" class="btn-icon" aria-label="Pagar Contas" title="Pagar Contas">${Icons.receipt(18)}</a>
+            <a href="#/trocar" class="btn-icon" aria-label="Trocar" title="Trocar">${Icons.repeat(18)}</a>
             <a href="#/config" class="btn-icon" aria-label="Configurações">${Icons.settings(18)}</a>
             <button id="btn-mobile-logout" class="btn-icon" aria-label="Sair">${Icons.logOut(18)}</button>
           </div>
@@ -127,7 +142,12 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
 
         <!-- FOOTER DO CONTEÚDO -->
         <footer class="content-footer">
-          ${MSG_RODAPE}
+          <div style="margin-bottom:8px;">
+            <a href="#/privacidade" style="color:var(--accent-emerald); font-weight:600; text-decoration:none;">
+              Privacidade na ROM
+            </a>
+          </div>
+          <div>${MSG_RODAPE}</div>
         </footer>
       </div>
 

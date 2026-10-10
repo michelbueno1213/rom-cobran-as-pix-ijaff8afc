@@ -4,18 +4,64 @@
 export const Icons = {
   logo: (size = 28) => `
     <svg width="${size}" height="${size}" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-svg">
-      <rect x="2" y="2" width="28" height="28" rx="8" fill="url(#logo-grad)" stroke="#10B981" stroke-width="1.5"/>
-      <rect x="7" y="7" width="6" height="6" rx="2" fill="#10B981"/>
-      <rect x="19" y="7" width="6" height="6" rx="2" fill="#10B981"/>
-      <rect x="7" y="19" width="6" height="6" rx="2" fill="#10B981"/>
-      <path d="M19 19H25V25H19V19Z" fill="#3B82F6" opacity="0.9"/>
-      <path d="M14 11H18M11 14V18M18 14H14V18" stroke="#E2E8F0" stroke-width="1.5" stroke-linecap="round"/>
       <defs>
-        <linearGradient id="logo-grad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+        <linearGradient id="rom-shield-bg-${size}" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
           <stop stop-color="#131C2E"/>
           <stop offset="1" stop-color="#0B1220"/>
         </linearGradient>
+        <linearGradient id="rom-shield-str-${size}" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#10B981"/>
+          <stop offset="1" stop-color="#059669"/>
+        </linearGradient>
       </defs>
+      <path d="M16 3L6 7V15C6 21.5 10.3 27.5 16 29C21.7 27.5 26 21.5 26 15V7L16 3Z" fill="url(#rom-shield-bg-${size})" stroke="url(#rom-shield-str-${size})" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="10" y="10" width="4" height="4" rx="1" fill="#10B981"/>
+      <rect x="18" y="10" width="4" height="4" rx="1" fill="#10B981"/>
+      <rect x="10" y="18" width="4" height="4" rx="1" fill="#10B981"/>
+      <rect x="18" y="18" width="4" height="4" rx="1" fill="#10B981"/>
+      <rect x="14" y="14" width="4" height="4" rx="0.75" fill="#34D399"/>
+    </svg>
+  `,
+
+  receipt: (size = 20) => `
+    <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1z"/>
+      <line x1="8" y1="8" x2="16" y2="8"/>
+      <line x1="8" y1="12" x2="16" y2="12"/>
+      <line x1="8" y1="16" x2="12" y2="16"/>
+    </svg>
+  `,
+
+  tag: (size = 20) => `
+    <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+      <line x1="7" y1="7" x2="7.01" y2="7"/>
+    </svg>
+  `,
+
+  repeat: (size = 20) => `
+    <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="17 1 21 5 17 9"/>
+      <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+      <polyline points="7 23 3 19 7 15"/>
+      <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+    </svg>
+  `,
+
+  bot: (size = 20) => `
+    <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="10" rx="2"/>
+      <circle cx="12" cy="5" r="2"/>
+      <path d="M12 7v4"/>
+      <line x1="8" y1="16" x2="8.01" y2="16"/>
+      <line x1="16" y1="16" x2="16.01" y2="16"/>
+    </svg>
+  `,
+
+  lock: (size = 20) => `
+    <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
     </svg>
   `,
 

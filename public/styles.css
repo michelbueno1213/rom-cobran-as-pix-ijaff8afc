@@ -1041,6 +1041,10 @@ a:hover {
     grid-template-columns: 1fr !important;
   }
 
+  .sidebar-footer a[href='#/privacidade'] {
+    display: none;
+  }
+
   .sidebar {
     display: none;
   }

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="rom-shield-bg" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#131C2E"/>
+      <stop offset="1" stop-color="#0B1220"/>
+    </linearGradient>
+    <linearGradient id="rom-shield-stroke" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10B981"/>
+      <stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <!-- Escudo externo -->
+  <path d="M16 3L6 7V15C6 21.5 10.3 27.5 16 29C21.7 27.5 26 21.5 26 15V7L16 3Z" fill="url(#rom-shield-bg)" stroke="url(#rom-shield-stroke)" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Padrão QR / Pixel central transmitindo privacidade e proteção -->
+  <rect x="10" y="10" width="4" height="4" rx="1" fill="#10B981"/>
+  <rect x="18" y="10" width="4" height="4" rx="1" fill="#10B981"/>
+  <rect x="10" y="18" width="4" height="4" rx="1" fill="#10B981"/>
+  <rect x="18" y="18" width="4" height="4" rx="1" fill="#10B981"/>
+  <rect x="14" y="14" width="4" height="4" rx="0.75" fill="#34D399"/>
+</svg>

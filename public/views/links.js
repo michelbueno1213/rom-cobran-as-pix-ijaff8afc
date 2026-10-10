@@ -1,7 +1,10 @@
 /**
  * View: Meus Links (#/links)
  * Abas: "Links de Pagamento" e "QR Fixo"
- * Criação bloqueada com a mensagem "Em breve" exata
+ * Atualização paridade DeFlow:
+ * - Opção de tipo de QR (Estático / Dinâmico)
+ * - Para QR dinâmico: campo de expiração (15 min / 1 hora / 24 horas / sem expiração)
+ * Criação bloqueada com a mensagem "Em breve" exata (toast + banner)
  * NUNCA gerar link ou QR fictício; lista com estado vazio ilustrado
  */
 
@@ -10,6 +13,7 @@ import { attachBrlMask } from '../utils.js'
 import { showEmBreveToast } from '../toast.js'
 
 let activeTab = 'links' // 'links' | 'qr'
+let qrType = 'estatico' // 'estatico' | 'dinamico'
 
 export function renderLinksView() {
   return `
@@ -17,6 +21,15 @@ export function renderLinksView() {
       <div>
         <h1 style="margin-bottom:6px;">Meus Links</h1>
         <p>Links reutilizáveis e QR Codes fixos para recebimento ágil de pagamentos Pix.</p>
+      </div>
+
+      <!-- BANNER AVISO EM BREVE -->
+      <div class="banner-amber">
+        ${Icons.alertTriangle(22)}
+        <div>
+          <strong style="display:block; margin-bottom:2px; color:#fde68a;">Links de Pagamento e QR Code Pix</strong>
+          <span>Em breve: geração de cobranças Pix. Estamos finalizando nossa integração com a provedora de pagamentos.</span>
+        </div>
       </div>
 
       <!-- ABAS -->
@@ -29,7 +42,7 @@ export function renderLinksView() {
             activeTab === 'links' ? 'var(--accent-emerald)' : 'transparent'
           }; border-radius:0; color:${activeTab === 'links' ? 'var(--accent-emerald)' : 'var(--text-muted)'}; padding:10px 16px; font-weight:600;"
         >
-          Links de Pagamento
+          ${Icons.link(18)} Links de Pagamento
         </button>
         <button
           type="button"
@@ -39,7 +52,7 @@ export function renderLinksView() {
             activeTab === 'qr' ? 'var(--accent-emerald)' : 'transparent'
           }; border-radius:0; color:${activeTab === 'qr' ? 'var(--accent-emerald)' : 'var(--text-muted)'}; padding:10px 16px; font-weight:600;"
         >
-          QR Fixo
+          ${Icons.qrCode(18)} QR Fixo
         </button>
       </div>
 
@@ -61,6 +74,30 @@ export function renderLinksView() {
               <label class="form-label" for="link-preco">Preço (R$)</label>
               <input type="text" id="link-preco" class="form-input" value="R$ 0,00" required />
             </div>
+
+            <div class="form-group">
+              <label class="form-label" for="link-tipo-qr">Tipo de QR do link</label>
+              <select id="link-tipo-qr" class="form-select">
+                <option value="estatico" ${qrType === 'estatico' ? 'selected' : ''}>Estático (mesmo QR para pagamentos recorrentes)</option>
+                <option value="dinamico" ${qrType === 'dinamico' ? 'selected' : ''}>Dinâmico (um QR novo por tentativa com expiração)</option>
+              </select>
+            </div>
+
+            ${
+              qrType === 'dinamico'
+                ? `
+              <div class="form-group">
+                <label class="form-label" for="link-expiracao">Tempo de expiração do QR dinâmico</label>
+                <select id="link-expiracao" class="form-select">
+                  <option value="15m">15 minutos</option>
+                  <option value="1h">1 hora</option>
+                  <option value="24h">24 horas</option>
+                  <option value="sem">Sem expiração</option>
+                </select>
+              </div>
+            `
+                : ''
+            }
 
             <div class="form-group">
               <label class="form-label" for="link-descricao">Descrição (opcional)</label>
@@ -98,6 +135,30 @@ export function renderLinksView() {
                 <input type="text" id="qr-slug" class="form-input" style="border-radius:0 var(--radius-md) var(--radius-md) 0;" placeholder="balcao-loja-1" required />
               </div>
             </div>
+
+            <div class="form-group">
+              <label class="form-label" for="qr-tipo-fixo">Tipo de QR</label>
+              <select id="qr-tipo-fixo" class="form-select">
+                <option value="estatico" ${qrType === 'estatico' ? 'selected' : ''}>Estático (QR impresso reutilizável)</option>
+                <option value="dinamico" ${qrType === 'dinamico' ? 'selected' : ''}>Dinâmico (gera novo código a cada escaneamento)</option>
+              </select>
+            </div>
+
+            ${
+              qrType === 'dinamico'
+                ? `
+              <div class="form-group">
+                <label class="form-label" for="qr-expiracao">Tempo de expiração</label>
+                <select id="qr-expiracao" class="form-select">
+                  <option value="15m">15 minutos</option>
+                  <option value="1h">1 hora</option>
+                  <option value="24h">24 horas</option>
+                  <option value="sem">Sem expiração</option>
+                </select>
+              </div>
+            `
+                : ''
+            }
 
             <div class="form-group">
               <label class="form-label" for="qr-valor">Valor padrão (R$, opcional)</label>
@@ -139,6 +200,22 @@ export function initLinksEvents(currentUser, reRender) {
   if (tabQr) {
     tabQr.addEventListener('click', () => {
       activeTab = 'qr'
+      reRender()
+    })
+  }
+
+  const selectLinkTipoQr = document.getElementById('link-tipo-qr')
+  if (selectLinkTipoQr) {
+    selectLinkTipoQr.addEventListener('change', (e) => {
+      qrType = e.target.value
+      reRender()
+    })
+  }
+
+  const selectQrTipoFixo = document.getElementById('qr-tipo-fixo')
+  if (selectQrTipoFixo) {
+    selectQrTipoFixo.addEventListener('change', (e) => {
+      qrType = e.target.value
       reRender()
     })
   }

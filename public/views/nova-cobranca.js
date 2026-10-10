@@ -2,12 +2,13 @@
  * View: Nova Cobrança (#/nova-cobranca)
  * Valor com máscara BRL
  * Carteira de recebimento: chip se houver padrão, formulário inline validando lq1/ex1 se não houver
+ * Dropdown "Ativo de liquidação" (multi-ativos paridade DeFlow, padrão DePix Liquid)
  * Cliente e descrição opcionais
  * Botão "Gerar Cobrança Pix" dispara TOAST "Em breve" e NUNCA gera QR fictício
  */
 
 import { Icons } from '../icons.js'
-import { attachBrlMask, isValidLiquidAddress } from '../utils.js'
+import { attachBrlMask, isValidLiquidAddress, MULTI_ASSETS } from '../utils.js'
 import { Store } from '../store.js'
 import { showEmBreveToast, showToast } from '../toast.js'
 
@@ -37,11 +38,23 @@ export function renderNovaCobrancaView(currentUser) {
               style="font-size:1.6rem; font-weight:800; color:var(--accent-emerald); height:56px;"
               required
             />
-            <span class="form-hint">O valor em reais será liquidado em DePix na taxa 1:1.</span>
+            <span class="form-hint">O valor em reais será liquidado no ativo selecionado.</span>
+          </div>
+
+          <!-- SELETOR DE ATIVO DE LIQUIDAÇÃO (PARIDADE DEFLOW) -->
+          <div class="form-group" style="margin-top:16px;">
+            <label class="form-label" for="cobranca-asset">Ativo de liquidação</label>
+            <select id="cobranca-asset" class="form-select">
+              ${MULTI_ASSETS.map(
+                (a) =>
+                  `<option value="${a.id}" ${a.id === 'depix_liquid' ? 'selected' : ''}>${a.label}</option>`,
+              ).join('')}
+            </select>
+            <span class="form-hint">O pagador paga via Pix e você recebe na moeda/rede escolhida.</span>
           </div>
 
           <!-- SEÇÃO CARTEIRA DE RECEBIMENTO -->
-          <div class="form-group" style="margin-top:22px;">
+          <div class="form-group" style="margin-top:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
               <label class="form-label">Carteira Liquid de recebimento</label>
               ${
@@ -172,7 +185,6 @@ export function initNovaCobrancaEvents(currentUser, reRender) {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault()
-      // Dispara toast com a mensagem exata requerida pela especificação
       showEmBreveToast()
     })
   }

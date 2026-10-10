@@ -3,10 +3,11 @@
  *
  * Rotas:
  * - #/ (landing pública)
+ * - #/privacidade (página pública sobre privacidade)
  * - #/entrar, #/criar-conta (se logado -> #/inicio)
  * - #/pagar/:id (pública, sem login)
- * - #/inicio, #/nova-cobranca, #/links, #/saques, #/historico, #/carteiras,
- *   #/liquidados, #/config, #/suporte, #/homologacao -> exigem sessão (se não logado -> #/)
+ * - #/inicio, #/nova-cobranca, #/links, #/saques, #/pagar-contas, #/historico, #/carteiras,
+ *   #/trocar, #/liquidados, #/cupons, #/config, #/suporte, #/homologacao -> exigem sessão
  * - #/homologacao: exige isAdmin === true (se não admin -> #/inicio com toast)
  */
 
@@ -14,6 +15,7 @@ import { Store } from './store.js'
 import { showToast } from './toast.js'
 import { renderDashboardLayout } from './views/layout.js'
 import { renderLandingView } from './views/landing.js'
+import { renderPrivacidadeView } from './views/privacidade.js'
 import {
   renderLoginView,
   initLoginEvents,
@@ -24,9 +26,12 @@ import { renderInicioView } from './views/inicio.js'
 import { renderNovaCobrancaView, initNovaCobrancaEvents } from './views/nova-cobranca.js'
 import { renderLinksView, initLinksEvents } from './views/links.js'
 import { renderSaquesView, initSaquesEvents } from './views/saques.js'
+import { renderPagarContasView, initPagarContasEvents } from './views/pagar-contas.js'
 import { renderHistoricoView, initHistoricoEvents } from './views/historico.js'
 import { renderCarteirasView, initCarteirasEvents } from './views/carteiras.js'
+import { renderTrocarView, initTrocarEvents } from './views/trocar.js'
 import { renderLiquidadosView, initLiquidadosEvents } from './views/liquidados.js'
+import { renderCuponsView, initCuponsEvents } from './views/cupons.js'
 import { renderConfigView, initConfigEvents } from './views/config.js'
 import { renderSuporteView, initSuporteEvents } from './views/suporte.js'
 import { renderHomologacaoView, initHomologacaoEvents } from './views/homologacao.js'
@@ -60,7 +65,13 @@ export const Router = {
       return
     }
 
-    // 2. Rotas de Autenticação (#/entrar e #/criar-conta)
+    // 2. Rota Pública de Privacidade: #/privacidade
+    if (rawHash === '#/privacidade') {
+      appEl.innerHTML = renderPrivacidadeView()
+      return
+    }
+
+    // 3. Rotas de Autenticação (#/entrar e #/criar-conta)
     if (rawHash === '#/entrar') {
       if (currentUser) {
         this.navigate('#/inicio')
@@ -81,7 +92,7 @@ export const Router = {
       return
     }
 
-    // 3. Rota Raiz (#/ ou vazia)
+    // 4. Rota Raiz (#/ ou vazia)
     if (rawHash === '#/' || rawHash === '#' || rawHash === '') {
       if (currentUser) {
         this.navigate('#/inicio')
@@ -91,13 +102,13 @@ export const Router = {
       return
     }
 
-    // 4. Todas as rotas do painel exigem usuário autenticado
+    // 5. Todas as rotas do painel exigem usuário autenticado
     if (!currentUser) {
       this.navigate('#/')
       return
     }
 
-    // 5. Rota Homologação: restrita a administradores
+    // 6. Rota Homologação: restrita a administradores
     if (rawHash === '#/homologacao' && !currentUser.isAdmin) {
       showToast('Acesso restrito a administradores.', 'warning', 3000)
       this.navigate('#/inicio')
@@ -131,6 +142,11 @@ export const Router = {
         initCallback = () => initSaquesEvents()
         break
 
+      case '#/pagar-contas':
+        contentHtml = renderPagarContasView(currentUser)
+        initCallback = () => initPagarContasEvents(currentUser, reRender)
+        break
+
       case '#/historico':
         contentHtml = renderHistoricoView(currentUser)
         initCallback = () => initHistoricoEvents(currentUser, reRender)
@@ -141,9 +157,19 @@ export const Router = {
         initCallback = () => initCarteirasEvents(currentUser, reRender)
         break
 
+      case '#/trocar':
+        contentHtml = renderTrocarView(currentUser)
+        initCallback = () => initTrocarEvents(currentUser, reRender)
+        break
+
       case '#/liquidados':
         contentHtml = renderLiquidadosView(currentUser)
         initCallback = () => initLiquidadosEvents(currentUser, reRender)
+        break
+
+      case '#/cupons':
+        contentHtml = renderCuponsView(currentUser)
+        initCallback = () => initCuponsEvents(currentUser, reRender)
         break
 
       case '#/config':
