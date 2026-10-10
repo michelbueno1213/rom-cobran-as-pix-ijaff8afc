@@ -11,12 +11,12 @@ export function renderLoginView() {
     <div class="auth-page">
       <div class="auth-card">
         <div class="auth-header">
-          <a href="#/" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:16px;">
-            ${Icons.logo(36)}
-            <span style="font-size:1.4rem; font-weight:800; color:var(--text-main);">ROM</span>
+          <a href="#/" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:16px; text-decoration:none;">
+            ${Icons.logo(32)}
+            <span style="font-size:1.25rem; font-weight:700; color:var(--text-main); letter-spacing:0.04em;">ROM</span>
           </a>
           <h2>Entrar na conta</h2>
-          <p style="font-size:0.88rem; margin-top:4px;">Acesse o painel de cobranças Pix → DePix</p>
+          <p style="font-size:0.88rem; margin-top:4px;">Acesso preservado ao painel de liquidação DePix</p>
         </div>
 
         <form id="form-login" novalidate>
@@ -88,12 +88,12 @@ export function renderRegisterView() {
     <div class="auth-page">
       <div class="auth-card">
         <div class="auth-header">
-          <a href="#/" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:16px;">
-            ${Icons.logo(36)}
-            <span style="font-size:1.4rem; font-weight:800; color:var(--text-main);">ROM</span>
+          <a href="#/" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:16px; text-decoration:none;">
+            ${Icons.logo(32)}
+            <span style="font-size:1.25rem; font-weight:700; color:var(--text-main); letter-spacing:0.04em;">ROM</span>
           </a>
-          <h2>Criar conta grátis</h2>
-          <p style="font-size:0.88rem; margin-top:4px;">Comece a liquidar diretamente em DePix</p>
+          <h2>Criar conta preservada</h2>
+          <p style="font-size:0.88rem; margin-top:4px;">Inicie sua operação com soberania e proteção de dados</p>
         </div>
 
         <form id="form-register" novalidate>

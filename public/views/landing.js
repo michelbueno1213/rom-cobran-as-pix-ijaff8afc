@@ -1,12 +1,11 @@
 /**
  * View: Landing Pública (rota #/ ou raiz sem login)
- * Atualizada com identidade de privacidade:
- * - Badge no hero: "Sem KYC para começar"
- * - Seção contraste "Cansado de expor seus dados?": "No banco tradicional" vs "Na ROM"
- * - Seção suporte "Suporte que respeita sua privacidade.": "Inteligência artificial 24 horas" e "Gente de verdade quando importa"
- * - Manter 3 cards existentes (Sem custódia, Multicliente, Liquidação direta)
- * - Manter 3 passos existentes
- * - Links "Privacidade" no rodapé
+ * Identidade Sóbria, Oculta e Preservadora:
+ * - Sigilo, discrição e preservação de dados
+ * - "Seus dados não são a moeda de troca." / "Ninguém precisa saber quem você é para receber."
+ * - Badge no hero: "Identidade preservada"
+ * - Seção contraste sem exclamações nem emojis: foco em resguardo, proteção e sobriedade
+ * - Traço fino monocromático, sem cores chamativas ou brincadeiras visuais
  */
 
 import { Icons } from '../icons.js'
@@ -18,183 +17,183 @@ export function renderLandingView() {
       <!-- NAVBAR PÚBLICA -->
       <header class="landing-navbar">
         <a href="#/" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
-          ${Icons.logo(32)}
-          <span style="font-size:1.25rem; font-weight:800; color:var(--text-main); letter-spacing:0.04em;">ROM</span>
+          ${Icons.logo(30)}
+          <span style="font-size:1.15rem; font-weight:700; color:var(--text-main); letter-spacing:0.06em;">ROM</span>
         </a>
         <div style="display:flex; align-items:center; gap:12px;">
           <a href="#/privacidade" class="btn btn-outline btn-sm">Privacidade</a>
           <a href="#/entrar" class="btn btn-outline btn-sm">Entrar</a>
-          <a href="#/criar-conta" class="btn btn-primary btn-sm">Criar conta grátis</a>
+          <a href="#/criar-conta" class="btn btn-primary btn-sm">Criar conta</a>
         </div>
       </header>
 
       <!-- HERO SECTION -->
       <section class="landing-hero">
         <div class="hero-pill">
-          ${Icons.shield(16)}
-          <span>Sem KYC para começar</span>
+          ${Icons.shield(15)}
+          <span>Identidade preservada</span>
         </div>
-        <h1 class="hero-title">Do Pix para a sua carteira Liquid.</h1>
+        <h1 class="hero-title">Seus dados não são a moeda de troca.</h1>
         <p class="hero-subtitle">
-          Receba pagamentos Pix dos seus clientes com conversão e liquidação direta em DePix na sua carteira Liquid, sem intermediários custodiando o seu capital.
+          Ninguém precisa saber quem você é para receber. Receba pagamentos Pix com liquidação direta em DePix na sua carteira Liquid, sem custódia e sem exposição.
         </p>
         <div class="hero-actions">
-          <a href="#/criar-conta" class="btn btn-primary btn-lg">Criar conta grátis</a>
-          <a href="#/entrar" class="btn btn-secondary btn-lg">Entrar</a>
+          <a href="#/criar-conta" class="btn btn-primary btn-lg">Abrir conta soberana</a>
+          <a href="#/entrar" class="btn btn-secondary btn-lg">Acessar painel</a>
         </div>
       </section>
 
-      <!-- 3 CARDS EM DESTAQUE (MANTIDOS) -->
+      <!-- 3 CARDS EM DESTAQUE (MANTIDOS E SÓBRIOS) -->
       <section class="landing-section">
         <div class="section-header">
-          <h2 class="section-title">Construído para comerciantes soberanos</h2>
-          <p class="section-subtitle">Arquitetura sem custódia de ponta a ponta na rede Liquid.</p>
+          <h2 class="section-title">Proteção contínua para sua operação</h2>
+          <p class="section-subtitle">Arquitetura não-custodial e comunicação silenciosa na rede Liquid.</p>
         </div>
 
         <div class="grid-3">
           <div class="feature-card">
-            <div class="feature-icon">${Icons.shield(22)}</div>
-            <h3 style="margin-bottom:8px;">Sem custódia</h3>
-            <p style="font-size:0.9rem; line-height:1.5;">
-              A ROM não custodia valores. Os pagamentos são liquidados diretamente na sua carteira Liquid.
+            <div class="feature-icon">${Icons.shield(20)}</div>
+            <h3 style="margin-bottom:8px; font-weight:600;">Sem custódia</h3>
+            <p style="font-size:0.88rem; line-height:1.6; color:var(--text-muted);">
+              A plataforma não retém nem gerencia seu capital. A liquidação ocorre de forma direta no endereço Liquid do destinatário.
             </p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">${Icons.users(22)}</div>
-            <h3 style="margin-bottom:8px;">Multicliente</h3>
-            <p style="font-size:0.9rem; line-height:1.5;">
-              Crie uma carteira Liquid por operação e receba de cada cliente de forma organizada.
+            <div class="feature-icon">${Icons.users(20)}</div>
+            <h3 style="margin-bottom:8px; font-weight:600;">Multicliente</h3>
+            <p style="font-size:0.88rem; line-height:1.6; color:var(--text-muted);">
+              Segregação de recebíveis por carteira ou operação, mantendo fluxos isolados e sem cruzamento de dados sensíveis.
             </p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">${Icons.zap(22)}</div>
-            <h3 style="margin-bottom:8px;">Liquidação direta</h3>
-            <p style="font-size:0.9rem; line-height:1.5;">
-              Pix confirmado vira DePix líquido na sua carteira, direto na rede Liquid.
+            <div class="feature-icon">${Icons.zap(20)}</div>
+            <h3 style="margin-bottom:8px; font-weight:600;">Liquidação direta</h3>
+            <p style="font-size:0.88rem; line-height:1.6; color:var(--text-muted);">
+              Conversão Pix confirmada e liquidada em DePix na rede Liquid, sem intermediários no caminho.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- SEÇÃO CONTRASTE ESTILO DEFLOW: CANSADO DE EXPOR SEUS DADOS? -->
+      <!-- SEÇÃO CONTRASTE SÓBRIA: CANSADO DE EXPOR SEUS DADOS? -->
       <section class="landing-section" style="padding-top:0;">
         <div class="section-header">
-          <span class="badge badge-amber" style="margin-bottom:10px;">Liberdade de verdade</span>
+          <span class="badge badge-gray" style="margin-bottom:10px;">Resguardo de dados</span>
           <h2 class="section-title">Cansado de expor seus dados?</h2>
-          <p class="section-subtitle">No banco é formulário atrás de formulário, comprovante de tudo e espera. Aqui é diferente.</p>
+          <p class="section-subtitle">A intermediação convencional exige comprovação de tudo. A ROM opera sob discrição e mínimo privilégio.</p>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;" class="config-grid">
-          <div class="card" style="background:rgba(239, 68, 68, 0.04); border-color:rgba(239, 68, 68, 0.25); padding:32px;">
+          <div class="card" style="background:rgba(15, 23, 42, 0.4); border-color:var(--border-subtle); padding:28px;">
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
-              <span style="color:var(--accent-red); font-size:1.2rem;">✕</span>
-              <h3 style="color:var(--text-main); font-size:1.2rem;">No banco tradicional</h3>
+              <span style="color:#64748b; font-size:1rem;">—</span>
+              <h3 style="color:var(--text-main); font-size:1.05rem; font-weight:600;">Intermediação bancária tradicional</h3>
             </div>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:14px; font-size:0.92rem; color:var(--text-muted);">
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; font-size:0.88rem; color:var(--text-muted);">
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-red);">&bull;</span>
-                <span>Pede documento, comprovante de endereço e até foto facial</span>
+                <span style="color:#64748b;">•</span>
+                <span>Exigência de documentos pessoais, biometria e comprovantes</span>
               </li>
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-red);">&bull;</span>
-                <span>Demora dias úteis para aprovar e liberar a conta</span>
+                <span style="color:#64748b;">•</span>
+                <span>Prazos de aprovação com análise humana de histórico financeiro</span>
               </li>
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-red);">&bull;</span>
-                <span>Bloqueia seu dinheiro preventivamente quando quer</span>
+                <span style="color:#64748b;">•</span>
+                <span>Retenções unilaterais e bloqueios cautelares de saldo</span>
               </li>
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-red);">&bull;</span>
-                <span>Burocracia e tarifas escondidas em cada operação</span>
+                <span style="color:#64748b;">•</span>
+                <span>Exposição contínua do perfil de compras e movimentações</span>
               </li>
             </ul>
           </div>
 
-          <div class="card" style="background:rgba(16, 185, 129, 0.05); border-color:rgba(16, 185, 129, 0.35); padding:32px;">
+          <div class="card" style="background:rgba(19, 28, 46, 0.65); border-color:#334155; padding:28px;">
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
-              <span style="color:var(--accent-emerald); font-size:1.2rem;">✓</span>
-              <h3 style="color:var(--text-main); font-size:1.2rem;">Na ROM</h3>
+              <span style="color:var(--accent-emerald); font-size:1rem;">—</span>
+              <h3 style="color:var(--text-main); font-size:1.05rem; font-weight:600;">Arquitetura preservadora ROM</h3>
             </div>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:14px; font-size:0.92rem; color:var(--text-main);">
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; font-size:0.88rem; color:var(--text-main);">
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-emerald); font-weight:bold;">✓</span>
-                <span><strong>Comece sem KYC</strong>, em menos de 1 minuto</span>
+                <span style="color:var(--accent-emerald); font-weight:600;">•</span>
+                <span>Identidade preservada: início imediato sem coleta desnecessária</span>
               </li>
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-emerald); font-weight:bold;">✓</span>
-                <span><strong>Conta pronta na hora</strong>, sem filas ou burocracia</span>
+                <span style="color:var(--accent-emerald); font-weight:600;">•</span>
+                <span>Ativação instantânea da conta sem formulários invasivos</span>
               </li>
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-emerald); font-weight:bold;">✓</span>
-                <span><strong>Não-custodial</strong>: o dinheiro é seu, sempre</span>
+                <span style="color:var(--accent-emerald); font-weight:600;">•</span>
+                <span>Não-custodial: soberania total sobre as chaves e os ativos</span>
               </li>
               <li style="display:flex; align-items:flex-start; gap:10px;">
-                <span style="color:var(--accent-emerald); font-weight:bold;">✓</span>
-                <span><strong>Receber, enviar e cobrar</strong> em poucos toques</span>
+                <span style="color:var(--accent-emerald); font-weight:600;">•</span>
+                <span>Liquidação direta em carteira Liquid de forma silenciosa</span>
               </li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- 3 PASSOS NUMERADOS (MANTIDOS) -->
-      <section class="landing-section" style="padding-top:20px;">
+      <!-- 3 PASSOS NUMERADOS (MANTIDOS E SÓBRIOS) -->
+      <section class="landing-section" style="padding-top:16px;">
         <div class="section-header">
-          <h2 class="section-title">Como funciona em 3 passos simples</h2>
-          <p class="section-subtitle">Comece a receber em DePix em poucos minutos.</p>
+          <h2 class="section-title">Como funciona o fluxo de recebimento</h2>
+          <p class="section-subtitle">Três etapas discretas entre o pagador e a sua carteira privada.</p>
         </div>
 
         <div class="grid-3">
           <div class="step-card">
             <div class="step-number">1</div>
-            <h3 style="margin-bottom:8px;">Criar conta</h3>
-            <p style="font-size:0.9rem; line-height:1.5;">
-              Cadastro rápido com nome do comerciante, e-mail e senha segura.
+            <h3 style="margin-bottom:8px; font-weight:600;">Criar acesso</h3>
+            <p style="font-size:0.88rem; line-height:1.5; color:var(--text-muted);">
+              Definição de credenciais de acesso com hash criptográfico protegido.
             </p>
           </div>
 
           <div class="step-card">
             <div class="step-number">2</div>
-            <h3 style="margin-bottom:8px;">Cadastrar carteira</h3>
-            <p style="font-size:0.9rem; line-height:1.5;">
-              Informe o apelido e o endereço Liquid começando com <code>lq1</code> ou <code>ex1</code>.
+            <h3 style="margin-bottom:8px; font-weight:600;">Cadastrar carteira</h3>
+            <p style="font-size:0.88rem; line-height:1.5; color:var(--text-muted);">
+              Indicação do endereço da sua carteira Liquid iniciado por <code>lq1</code> ou <code>ex1</code>.
             </p>
           </div>
 
           <div class="step-card">
             <div class="step-number">3</div>
-            <h3 style="margin-bottom:8px;">Gerar cobranças</h3>
-            <p style="font-size:0.9rem; line-height:1.5;">
-              Código Pix para o cliente pagar e você receber DePix na Liquid diretamente.
+            <h3 style="margin-bottom:8px; font-weight:600;">Gerar cobrança</h3>
+            <p style="font-size:0.88rem; line-height:1.5; color:var(--text-muted);">
+              O pagador liquida via Pix e o DePix é creditado diretamente na sua custódia pessoal.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- SEÇÃO SUPORTE ESTILO DEFLOW -->
+      <!-- SEÇÃO SUPORTE SÓBRIA -->
       <section class="landing-section" style="padding-top:0;">
         <div class="section-header">
-          <span class="badge badge-blue" style="margin-bottom:10px;">Atendimento que respeita você</span>
-          <h2 class="section-title">Suporte que respeita sua privacidade.</h2>
-          <p class="section-subtitle">Ajuda rápida na hora certa. O equilíbrio perfeito entre inteligência artificial e acolhimento humano.</p>
+          <span class="badge badge-gray" style="margin-bottom:10px;">Atendimento sob demanda</span>
+          <h2 class="section-title">Suporte com discrição e sigilo.</h2>
+          <p class="section-subtitle">Canais diretos sem intermediários para resolver dúvidas técnicas com resguardo de informações.</p>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;" class="config-grid">
           <div class="feature-card">
-            <div class="feature-icon" style="background:var(--accent-blue-subtle); color:var(--accent-blue);">${Icons.bot(22)}</div>
-            <h3 style="margin-bottom:10px;">Inteligência artificial 24 horas</h3>
-            <p style="font-size:0.9rem; line-height:1.6;">
-              Tira dúvida na hora, a qualquer momento do dia ou da noite, sem fila. Resolve dúvidas técnicas sobre a Liquid, status de transações e regras de pagamento em segundos.
+            <div class="feature-icon">${Icons.bot(20)}</div>
+            <h3 style="margin-bottom:8px; font-weight:600;">Assistência automatizada 24 horas</h3>
+            <p style="font-size:0.88rem; line-height:1.6; color:var(--text-muted);">
+              Respostas técnicas imediatas sobre status de transações, validação de endereços Liquid e parâmetros de liquidação.
             </p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon" style="background:var(--accent-emerald-subtle); color:var(--accent-emerald);">${Icons.users(22)}</div>
-            <h3 style="margin-bottom:10px;">Gente de verdade quando importa</h3>
-            <p style="font-size:0.9rem; line-height:1.6;">
-              Quando o caso é sério, uma pessoa real assume, com nome e atenção. Atendimento humano dedicado para proteger seu negócio e garantir tranquilidade.
+            <div class="feature-icon">${Icons.users(20)}</div>
+            <h3 style="margin-bottom:8px; font-weight:600;">Atendimento individual especializado</h3>
+            <p style="font-size:0.88rem; line-height:1.6; color:var(--text-muted);">
+              Acompanhamento direto e confidencial para situações que demandem validação operacional ou técnica.
             </p>
           </div>
         </div>
@@ -203,10 +202,10 @@ export function renderLandingView() {
       <!-- FOOTER PÚBLICO COM LINK PRIVACIDADE -->
       <footer class="landing-footer">
         <div style="display:flex; justify-content:center; gap:20px; margin-bottom:16px; font-size:0.85rem;">
-          <a href="#/">Início</a>
-          <a href="#/privacidade" style="color:var(--accent-emerald);">Privacidade na ROM</a>
-          <a href="#/entrar">Entrar</a>
-          <a href="#/criar-conta">Criar conta grátis</a>
+          <a href="#/" style="color:var(--text-muted);">Início</a>
+          <a href="#/privacidade" style="color:var(--text-main); font-weight:500;">Privacidade na ROM</a>
+          <a href="#/entrar" style="color:var(--text-muted);">Entrar</a>
+          <a href="#/criar-conta" style="color:var(--text-muted);">Criar conta</a>
         </div>
         <p class="footer-disclaimer">${MSG_RODAPE}</p>
         <p class="footer-copy">ROM © 2025 — Todos os direitos reservados.</p>

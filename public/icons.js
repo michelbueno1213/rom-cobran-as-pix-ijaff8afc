@@ -4,22 +4,15 @@
 export const Icons = {
   logo: (size = 28) => `
     <svg width="${size}" height="${size}" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-svg">
-      <defs>
-        <linearGradient id="rom-shield-bg-${size}" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#131C2E"/>
-          <stop offset="1" stop-color="#0B1220"/>
-        </linearGradient>
-        <linearGradient id="rom-shield-str-${size}" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#10B981"/>
-          <stop offset="1" stop-color="#059669"/>
-        </linearGradient>
-      </defs>
-      <path d="M16 3L6 7V15C6 21.5 10.3 27.5 16 29C21.7 27.5 26 21.5 26 15V7L16 3Z" fill="url(#rom-shield-bg-${size})" stroke="url(#rom-shield-str-${size})" stroke-width="2" stroke-linejoin="round"/>
-      <rect x="10" y="10" width="4" height="4" rx="1" fill="#10B981"/>
-      <rect x="18" y="10" width="4" height="4" rx="1" fill="#10B981"/>
-      <rect x="10" y="18" width="4" height="4" rx="1" fill="#10B981"/>
-      <rect x="18" y="18" width="4" height="4" rx="1" fill="#10B981"/>
-      <rect x="14" y="14" width="4" height="4" rx="0.75" fill="#34D399"/>
+      <!-- Base do cofre / santuário preservador: traço sóbrio 1.5px -->
+      <path d="M16 3.5L6.5 7.5V15.5C6.5 22 10.8 27.5 16 29C21.2 27.5 25.5 22 25.5 15.5V7.5L16 3.5Z" fill="#111A2B" stroke="#475569" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- Fenda / visor interno sutil de custódia protegida -->
+      <path d="M11.5 13C11.5 11 13.5 9.5 16 9.5C18.5 9.5 20.5 11 20.5 13C20.5 16.2 16 19.5 16 19.5C16 19.5 11.5 16.2 11.5 13Z" stroke="#334155" stroke-width="1.2" stroke-linejoin="round"/>
+      <!-- Pálpebra / fenda horizontal preservadora -->
+      <line x1="12" y1="13.5" x2="20" y2="13.5" stroke="#64748B" stroke-width="1.4" stroke-linecap="round"/>
+      <!-- Micro-acento esmeralda dessaturado no centro do santuário -->
+      <circle cx="16" cy="13.5" r="1.25" fill="#2DD4BF"/>
+      <path d="M16 18V22.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
   `,
 
@@ -243,19 +236,22 @@ export const Icons = {
 
   emptyBox: (size = 64) => `
     <svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="empty-state-svg">
-      <rect x="8" y="16" width="48" height="38" rx="6" stroke="#334155" stroke-dasharray="4 4" fill="rgba(19, 28, 46, 0.4)"/>
-      <path d="M8 26h48" stroke="#334155"/>
-      <circle cx="32" cy="37" r="10" stroke="#10B981" stroke-width="1.5" stroke-dasharray="2 2"/>
-      <path d="M32 33v8M28 37h8" stroke="#10B981" stroke-width="1.5"/>
+      <rect x="12" y="16" width="40" height="36" rx="4" stroke="#334155" stroke-dasharray="3 3" fill="rgba(19, 28, 46, 0.25)"/>
+      <path d="M12 26h40" stroke="#334155" stroke-width="1"/>
+      <!-- Fenda de cofre silencioso e micro-acento discreto -->
+      <rect x="25" y="34" width="14" height="6" rx="2" stroke="#475569" stroke-width="1.2"/>
+      <circle cx="32" cy="37" r="1.5" fill="#2DD4BF"/>
     </svg>
   `,
 
   emptyCoins: (size = 64) => `
     <svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="empty-state-svg">
-      <ellipse cx="32" cy="20" rx="18" ry="7" stroke="#334155" fill="rgba(19, 28, 46, 0.6)"/>
-      <path d="M14 20v14c0 3.87 8.06 7 18 7s18-3.13 18-7V20" stroke="#334155"/>
-      <path d="M14 34v14c0 3.87 8.06 7 18 7s18-3.13 18-7V34" stroke="#10B981" stroke-width="1.5"/>
-      <circle cx="32" cy="20" r="3" fill="#10B981"/>
+      <ellipse cx="32" cy="22" rx="16" ry="6" stroke="#334155" fill="rgba(19, 28, 46, 0.3)"/>
+      <path d="M16 22v12c0 3.3 7.16 6 16 6s16-2.7 16-6V22" stroke="#334155"/>
+      <path d="M16 34v12c0 3.3 7.16 6 16 6s16-2.7 16-6V34" stroke="#475569" stroke-width="1.2"/>
+      <!-- Fenda preservadora sutil -->
+      <line x1="28" y1="22" x2="36" y2="22" stroke="#64748B" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="32" cy="22" r="1.2" fill="#2DD4BF"/>
     </svg>
   `,
 }

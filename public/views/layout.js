@@ -100,8 +100,8 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
 
         <div class="sidebar-footer">
           <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; margin-bottom:4px;">
-            <a href="#/privacidade" style="color:var(--accent-emerald); font-weight:600; text-decoration:none;">
-              ${Icons.shield(14)} Privacidade na ROM
+            <a href="#/privacidade" style="color:var(--text-muted); font-weight:500; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+              ${Icons.shield(14)} <span>Privacidade na ROM</span>
             </a>
           </div>
           <div class="sidebar-disclaimer">
@@ -124,8 +124,8 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
         <!-- HEADER MOBILE -->
         <header class="mobile-header">
           <div style="display:flex; align-items:center; gap:8px;">
-            ${Icons.logo(28)}
-            <span style="font-weight:800; font-size:1.1rem; color:var(--text-main);">ROM</span>
+            ${Icons.logo(26)}
+            <span style="font-weight:700; font-size:1.05rem; color:var(--text-main); letter-spacing:0.04em;">ROM</span>
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
             <a href="#/pagar-contas" class="btn-icon" aria-label="Pagar Contas" title="Pagar Contas">${Icons.receipt(18)}</a>
@@ -143,7 +143,7 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
         <!-- FOOTER DO CONTEÚDO -->
         <footer class="content-footer">
           <div style="margin-bottom:8px;">
-            <a href="#/privacidade" style="color:var(--accent-emerald); font-weight:600; text-decoration:none;">
+            <a href="#/privacidade" style="color:var(--text-muted); font-weight:500; text-decoration:none;">
               Privacidade na ROM
             </a>
           </div>
