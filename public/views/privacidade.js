@@ -80,7 +80,7 @@ export function renderPrivacidadeView() {
             </div>
             <h2 style="font-size:1.45rem; font-weight:700; margin-bottom:14px; color:var(--text-main);">Compromisso de Discrição</h2>
             <p style="font-size:0.92rem; line-height:1.7; color:var(--text-muted); margin-bottom:20px;">
-              A operação começa sem exposição de dados sensíveis. Verificações regulatórias adicionais só ocorrerão se exigidas estritamente pela parceira bancária liquidante em casos específicos, sempre com aviso prévio transparente e plena autonomia para encerrar ou remanejar a sua custódia.
+              A operação começa sem exposição de dados sensíveis. Procedimentos adicionais de conformidade só ocorrerão se estritamente exigidos por força regulatória em casos específicos, sempre com aviso prévio transparente e plena autonomia para encerrar ou remanejar a sua custódia.
             </p>
             <div style="font-size:1.1rem; font-weight:600; color:var(--text-main); letter-spacing:-0.01em;">
               “Seu negócio é seu. Seus dados também.”

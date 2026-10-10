@@ -14,7 +14,6 @@
  */
 
 import { Icons } from '../icons.js'
-import { MSG_RODAPE } from '../utils.js'
 
 export function renderLandingView() {
   // Padrão decorativo estático estilizado (NÃO payload Pix real nem escaneável)
@@ -105,7 +104,7 @@ export function renderLandingView() {
         </h1>
 
         <p class="hero-subtitle">
-          Gere cobranças Pix e receba em DePix na rede Liquid, diretamente na carteira cadastrada, por meio de parceiros integrados.
+          Gere cobranças Pix e receba em DePix na rede Liquid, diretamente na carteira cadastrada.
         </p>
 
         <div class="hero-actions">
@@ -115,7 +114,7 @@ export function renderLandingView() {
 
         <div class="hero-discrete-note">
           ${Icons.shield(13)}
-          <span>Cobranças reais dependem da integração e aprovação do provedor de liquidação.</span>
+          <span>Receba em DePix direto na sua carteira Liquid.</span>
         </div>
 
         <!-- MOCKUP SOFISTICADO DO HERO COM PARALLAX SUAVE NO MOUSE -->
@@ -130,9 +129,9 @@ export function renderLandingView() {
               </div>
               <div class="mockup-window-title">
                 ${Icons.shield(13)}
-                <span>rom-protocol // liquid-settlement // demonstration-mode</span>
+                <span>rom-protocol // liquid-settlement</span>
               </div>
-              <span class="mockup-amount-tag">DEMO VISUAL</span>
+              <span class="mockup-amount-tag mockup-tag-discrete">DEMO VISUAL</span>
             </div>
 
             <!-- Corpo do mockup -->
@@ -302,7 +301,7 @@ export function renderLandingView() {
               <div class="arch-flow-item">
                 <div class="arch-flow-icon" style="color:#38bdf8; background:rgba(56,189,248,0.1);">${Icons.zap(16)}</div>
                 <div>
-                  <div style="font-weight:600; color:#f1f5f9;">2. Provedores parceiros liquidam</div>
+                  <div style="font-weight:600; color:#f1f5f9;">2. Liquidação instantânea</div>
                   <div style="font-size:0.72rem; color:#64748b;">Conversão automatizada para DePix</div>
                 </div>
               </div>
@@ -433,7 +432,7 @@ export function renderLandingView() {
             <div class="step-number-badge">04</div>
             <h3 class="step-card-title">Acompanhe o recebimento</h3>
             <p class="step-card-desc">
-              Assim que o Pix for pago, o parceiro integrado liquida os DePix diretamente na sua carteira Liquid cadastrada.
+              Assim que o Pix for pago, os DePix são liquidados diretamente na sua carteira Liquid cadastrada.
             </p>
           </div>
         </div>
@@ -501,7 +500,7 @@ export function renderLandingView() {
               <div class="mockup-table-card">
                 <div class="mockup-table-header">
                   <span class="mockup-table-title">Monitor de Cobranças em Andamento</span>
-                  <span style="font-size:0.7rem; color:#64748b;">Parceiros Integrados</span>
+                  <span style="font-size:0.7rem; color:#64748b;">Rede Liquid</span>
                 </div>
 
                 <div class="mockup-tx-list">
@@ -632,10 +631,10 @@ export function renderLandingView() {
 
           <div class="footer-bottom-row">
             <p class="footer-disclaimer-text">
-              Cobranças reais dependem da integração e aprovação do provedor. A ROM é uma plataforma tecnológica de interface para orquestração de cobranças e liquidação direta em rede Liquid por parceiros integrados.
+              ROM — Cobranças Pix com liquidação em DePix na rede Liquid.
             </p>
             <p class="footer-copy-text">
-              ROM © 2025 — Infraestrutura de Recebimentos.
+              Criado com o Skip
             </p>
           </div>
         </div>
