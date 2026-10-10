@@ -62,8 +62,11 @@ export function renderLandingView() {
 
   return `
     <div class="landing-wrapper">
-      <!-- Iluminação e malha sutil de fundo -->
-      <div class="landing-ambient-bg" aria-hidden="true"></div>
+      <!-- Iluminação e malha sutil de fundo com orbes esmeralda desfocados -->
+      <div class="landing-ambient-bg" aria-hidden="true">
+        <div class="floating-orb floating-orb-1"></div>
+        <div class="floating-orb floating-orb-2"></div>
+      </div>
       <div class="landing-grid-overlay" aria-hidden="true"></div>
 
       <!-- NAVBAR PÚBLICA -->
@@ -71,7 +74,10 @@ export function renderLandingView() {
         <a href="#/" class="landing-nav-brand">
           ${Icons.logo(30)}
           <span class="landing-brand-title">ROM</span>
-          <span class="landing-brand-badge">LIQUID NETWORK</span>
+          <span class="landing-brand-badge" style="display:inline-flex; align-items:center; gap:5px;">
+            <span class="status-dot status-dot-green" style="width:5px; height:5px;"></span>
+            LIQUID NETWORK
+          </span>
         </a>
         <div class="landing-nav-actions">
           <a href="#/privacidade" class="btn btn-outline btn-sm">Privacidade</a>
@@ -81,10 +87,10 @@ export function renderLandingView() {
       </header>
 
       <!-- HERO SECTION (TEXTOS EXATOS VERBATIM) -->
-      <section class="landing-hero">
+      <section class="landing-hero reveal-on-scroll">
         <div class="hero-pill">
           <span class="hero-pill-dot"></span>
-          <span>Infraestrutura digital de recebimentos</span>
+          <span>Pix ⇄ DePix na rede Liquid</span>
         </div>
 
         <h1 class="hero-title">
@@ -106,8 +112,8 @@ export function renderLandingView() {
           <span>Cobranças reais dependem da integração e aprovação do provedor de liquidação.</span>
         </div>
 
-        <!-- MOCKUP SOFISTICADO DO HERO (DADOS FICTÍCIOS / DEMONSTRAÇÃO VISUAL) -->
-        <div class="hero-mockup-wrapper">
+        <!-- MOCKUP SOFISTICADO DO HERO COM PARALLAX SUAVE NO MOUSE -->
+        <div class="hero-mockup-wrapper" id="hero-console-mockup">
           <div class="hero-mockup-inner">
             <!-- Barra superior da janela -->
             <div class="mockup-window-bar">
@@ -164,7 +170,7 @@ export function renderLandingView() {
                       ${Icons.checkCircle(13)}
                       <span>Liquidado hoje</span>
                     </div>
-                    <div class="mockup-kpi-val">12.450 DePix</div>
+                    <div class="mockup-kpi-val"><span class="landing-animated-counter" data-target="12450" data-suffix=" DePix">12.450 DePix</span></div>
                     <div style="font-size:0.68rem; color:#2dd4bf; margin-top:2px;">100% em custódia própria</div>
                   </div>
 
@@ -173,7 +179,7 @@ export function renderLandingView() {
                       ${Icons.repeat(13)}
                       <span>Tempo médio</span>
                     </div>
-                    <div class="mockup-kpi-val">~ 18 seg</div>
+                    <div class="mockup-kpi-val">~ <span class="landing-animated-counter" data-target="18" data-suffix=" seg">18 seg</span></div>
                     <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">Pix → Confirmação Liquid</div>
                   </div>
 
@@ -245,6 +251,8 @@ export function renderLandingView() {
         </div>
       </section>
 
+      <hr class="section-divider" aria-hidden="true" />
+
       <!-- 1. SEÇÃO: APRESENTAÇÃO PREMIUM -->
       <section class="landing-section">
         <div class="presentation-card">
@@ -307,6 +315,8 @@ export function renderLandingView() {
           </div>
         </div>
       </section>
+
+      <hr class="section-divider" aria-hidden="true" />
 
       <!-- 2. SEÇÃO: BENEFÍCIOS EM QUATRO CARDS ELEGANTES -->
       <section class="landing-section" style="padding-top:20px;">
@@ -375,6 +385,8 @@ export function renderLandingView() {
         </div>
       </section>
 
+      <hr class="section-divider" aria-hidden="true" />
+
       <!-- 3. SEÇÃO: COMO FUNCIONA (PASSOS EXATOS DO USUÁRIO) -->
       <section class="landing-section">
         <div class="section-header-premium">
@@ -422,6 +434,8 @@ export function renderLandingView() {
         </div>
       </section>
 
+      <hr class="section-divider" aria-hidden="true" />
+
       <!-- 4. SEÇÃO: PAINEL ILUSTRATIVO COM TRANSAÇÕES E STATUS -->
       <section class="landing-section" style="padding-top:20px;">
         <div class="section-header-premium">
@@ -439,7 +453,10 @@ export function renderLandingView() {
               <span class="mockup-amount-tag" style="font-size:0.62rem;">VISUALIZAÇÃO DE INTERFACE</span>
             </div>
             <div style="display:flex; align-items:center; gap:14px; font-size:0.75rem; color:#64748b; font-family:var(--font-mono);">
-              <span>liquid-network: online</span>
+              <span class="liquid-status-badge">
+                <span class="status-dot status-dot-green" style="width:6px; height:6px;"></span>
+                liquid-network: online
+              </span>
               <span style="color:#2dd4bf;">•</span>
               <span>bloco: #2.981.415</span>
             </div>
@@ -455,7 +472,7 @@ export function renderLandingView() {
                     <span>Total Liquidado</span>
                     ${Icons.checkCircle(14)}
                   </div>
-                  <div class="dash-metric-val">48.320,00 DePix</div>
+                  <div class="dash-metric-val"><span class="landing-animated-counter" data-target="48320" data-format="currency" data-suffix=" DePix">48.320,00 DePix</span></div>
                   <div class="dash-metric-sub">
                     ${Icons.zap(12)}
                     <span>Equivalente a R$ 48.320,00</span>
@@ -467,7 +484,7 @@ export function renderLandingView() {
                     <span>Taxa de Liquidação</span>
                     ${Icons.repeat(14)}
                   </div>
-                  <div class="dash-metric-val">99,8%</div>
+                  <div class="dash-metric-val"><span class="landing-animated-counter" data-target="99.8" data-decimal="1" data-suffix="%">99,8%</span></div>
                   <div class="dash-metric-sub">
                     ${Icons.checkCircle(12)}
                     <span>Tempo médio de 18s</span>
@@ -620,4 +637,127 @@ export function renderLandingView() {
       </footer>
     </div>
   `
+}
+
+/**
+ * Inicialização de Animações Específicas da Landing:
+ * - Revelar seções ao rolar com IntersectionObserver (uma vez só, sem retrigger)
+ * - Contadores numéricos animados decorativos (respeitando prefers-reduced-motion)
+ * - Parallax suave no mouse sobre o card ilustrativo do console
+ */
+export function initLandingAnimations() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  // 1. Reveal on scroll (uma vez só)
+  const revealElements = document.querySelectorAll(
+    '.landing-section, .landing-hero, .final-cta-section',
+  )
+  if ('IntersectionObserver' in window && !prefersReduced) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+    )
+
+    revealElements.forEach((el) => {
+      el.classList.add('reveal-on-scroll')
+      revealObserver.observe(el)
+    })
+  } else {
+    // Fallback ou prefers-reduced-motion: exibe direto
+    revealElements.forEach((el) => el.classList.add('is-revealed'))
+  }
+
+  // 2. Contadores numéricos animados decorativos (somente na landing)
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const counterElements = document.querySelectorAll('.landing-animated-counter')
+    const counterObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target
+            animateCounter(el)
+            observer.unobserve(el)
+          }
+        })
+      },
+      { threshold: 0.2 },
+    )
+
+    counterElements.forEach((el) => counterObserver.observe(el))
+  }
+
+  // 3. Parallax 3D suave no mouse sobre o card ilustrativo do console
+  const consoleMockup = document.getElementById('hero-console-mockup')
+  if (consoleMockup && !prefersReduced) {
+    const handleMouseMove = (e) => {
+      const rect = consoleMockup.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+      const centerX = rect.width / 2
+      const centerY = rect.height / 2
+      const rotateX = ((y - centerY) / centerY) * -4.5 // Max ~4.5deg
+      const rotateY = ((x - centerX) / centerX) * 4.5
+
+      consoleMockup.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px)`
+    }
+
+    const handleMouseLeave = () => {
+      consoleMockup.style.transform =
+        'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)'
+    }
+
+    consoleMockup.addEventListener('mousemove', handleMouseMove)
+    consoleMockup.addEventListener('mouseleave', handleMouseLeave)
+  }
+}
+
+/**
+ * Função utilitária para contagem suave de 0 até o valor decorativo
+ */
+function animateCounter(el) {
+  const target = parseFloat(el.getAttribute('data-target') || '0')
+  const suffix = el.getAttribute('data-suffix') || ''
+  const isCurrency = el.getAttribute('data-format') === 'currency'
+  const decimalPlaces = parseInt(el.getAttribute('data-decimal') || '0', 10)
+  const duration = 1600 // ms
+  const startTime = performance.now()
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    // Easing out cubic: 1 - pow(1 - progress, 3)
+    const easeProgress = 1 - Math.pow(1 - progress, 3)
+    const currentVal = target * easeProgress
+
+    let formatted = ''
+    if (isCurrency) {
+      // Formato brasileiro: 48.320,00
+      formatted = currentVal.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    } else if (decimalPlaces > 0) {
+      formatted = currentVal.toLocaleString('pt-BR', {
+        minimumFractionDigits: decimalPlaces,
+        maximumFractionDigits: decimalPlaces,
+      })
+    } else {
+      formatted = Math.floor(currentVal).toLocaleString('pt-BR')
+    }
+
+    el.textContent = `${formatted}${suffix}`
+
+    if (progress < 1) {
+      requestAnimationFrame(update)
+    }
+  }
+
+  requestAnimationFrame(update)
 }

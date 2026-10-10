@@ -28,22 +28,22 @@ export function renderInicioView(currentUser) {
       </div>
 
       <!-- CARD VALORES LIQUIDADOS (NUNCA USAR TERMO "SALDO CUSTODIADO") -->
-      <div class="card" style="background: linear-gradient(135deg, #131c2e 0%, #172640 100%); border-color: rgba(16, 185, 129, 0.25);">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+      <div class="card" style="background: linear-gradient(135deg, #0d1627 0%, #112038 100%); border-color: rgba(16, 185, 129, 0.35); box-shadow: 0 8px 32px -4px rgba(0,0,0,0.6), 0 0 28px -6px rgba(16, 185, 129, 0.2);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
           <div>
-            <span class="badge badge-green" style="margin-bottom:10px;">Carteira Liquid Conectada</span>
-            <h2 style="font-size:1.1rem; color:var(--text-muted); font-weight:500;">Valores Liquidados</h2>
+            <span class="badge badge-green" style="margin-bottom:12px;"><span class="status-dot status-dot-green"></span>Carteira Liquid Conectada</span>
+            <h2 style="font-size:1.15rem; color:var(--text-muted); font-weight:600;">Valores Liquidados</h2>
           </div>
-          <div style="color:var(--accent-emerald);">
+          <div class="summary-icon-circle">
             ${Icons.wallet(28)}
           </div>
         </div>
 
-        <div style="font-size:2.8rem; font-weight:800; color:#ffffff; letter-spacing:-0.03em; margin: 4px 0 10px 0;">
+        <div class="tabular-nums" style="font-size:3.2rem; font-weight:800; color:#ffffff; letter-spacing:-0.035em; margin: 4px 0 12px 0; text-shadow: 0 0 32px rgba(16, 185, 129, 0.25);">
           R$ 0,00
         </div>
 
-        <p style="font-size:0.82rem; color:var(--text-muted);">
+        <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.55;">
           Pix entra, DePix sai na sua carteira Liquid. Os valores aparecem aqui após a liquidação real das cobranças.
         </p>
       </div>
@@ -55,7 +55,7 @@ export function renderInicioView(currentUser) {
             <h3 class="card-title">${Icons.shield(20)} Liquidação Soberana</h3>
             <p class="card-desc" style="margin-bottom:0;">Pix entra, DePix sai na sua carteira Liquid.</p>
           </div>
-          <span class="badge badge-green">Liquid Network</span>
+          <span class="badge badge-green"><span class="status-dot status-dot-green"></span>Liquid Network</span>
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:rgba(11, 18, 32, 0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-md);">

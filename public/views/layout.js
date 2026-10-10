@@ -57,6 +57,14 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
           </a>
         </div>
 
+        <!-- Indicador decorativo de rede Liquid no topo da sidebar -->
+        <div style="margin-bottom:12px; padding:0 4px;">
+          <div class="liquid-status-badge" style="width:100%; justify-content:center; padding:5px 8px;">
+            <span class="status-dot status-dot-green" style="width:6px; height:6px;"></span>
+            <span>liquid-network: online</span>
+          </div>
+        </div>
+
         <nav class="sidebar-nav">
           <div class="nav-section-title">Principal</div>
           ${navItems
@@ -124,6 +132,7 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
           <div style="display:flex; align-items:center; gap:8px;">
             ${Icons.logo(26)}
             <span style="font-weight:700; font-size:1.05rem; color:var(--text-main); letter-spacing:0.04em;">ROM</span>
+            <span class="status-dot status-dot-green" style="width:6px; height:6px;" title="liquid-network: online"></span>
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
             <a href="#/pagar-contas" class="btn-icon" aria-label="Pagar Contas" title="Pagar Contas">${Icons.receipt(18)}</a>

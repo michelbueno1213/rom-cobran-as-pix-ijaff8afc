@@ -98,6 +98,12 @@ export const Router = {
         return
       }
       appEl.innerHTML = renderLandingView()
+      // Inicializar animações da landing (orbes/parallax/contadores/reveal)
+      import('./views/landing.js').then((module) => {
+        if (typeof module.initLandingAnimations === 'function') {
+          module.initLandingAnimations()
+        }
+      })
       return
     }
 

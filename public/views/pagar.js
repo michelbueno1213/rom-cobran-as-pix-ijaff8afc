@@ -62,8 +62,8 @@ export function renderPagarView(chargeId) {
           </div>
           ${
             isHomolog
-              ? '<span class="badge badge-amber" style="font-size:0.68rem;">Teste</span>'
-              : '<span class="badge badge-green" style="font-size:0.68rem;">Oficial</span>'
+              ? '<span class="badge badge-amber" style="font-size:0.68rem;"><span class="status-dot status-dot-amber"></span>Teste</span>'
+              : '<span class="badge badge-green" style="font-size:0.68rem;"><span class="status-dot status-dot-green"></span>Oficial</span>'
           }
         </div>
 
@@ -114,6 +114,9 @@ export function renderPagarView(chargeId) {
           </span>
 
           <div class="timeline">
+            <!-- Barra de progresso preenchida dinamicamente conforme status -->
+            <div class="timeline-progress-bar" style="width: ${isDePixEnviado ? 'calc(100% - 48px)' : isPixConfirmado ? '50%' : '0%'};"></div>
+
             <div class="timeline-step ${step1Class}">
               <div class="timeline-dot">1</div>
               <span class="timeline-label">Aguardando pagamento</span>

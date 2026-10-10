@@ -26,11 +26,10 @@ export function renderHomologacaoView(currentUser) {
         <div>
           <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
             <h1 style="margin:0;">Homologação</h1>
-            <span class="badge badge-amber" style="font-size:0.75rem;">HOMOLOGAÇÃO</span>
+            <span class="badge badge-amber" style="font-size:0.75rem;"><span class="status-dot status-dot-amber"></span>HOMOLOGAÇÃO</span>
           </div>
           <p>Painel de testes e validação de fluxos de pagamento para administradores.</p>
         </div>
-
         ${
           charges.length > 0
             ? `
@@ -110,7 +109,7 @@ export function renderHomologacaoView(currentUser) {
                     <div style="display:flex; align-items:center; gap:10px;">
                       <strong style="font-size:1.05rem; color:var(--text-main);">${formatBrl(c.valor)}</strong>
                       ${getChargeBadge(c.status)}
-                      <span class="badge badge-amber" style="font-size:0.65rem;">is_simulated</span>
+                      <span class="badge badge-amber" style="font-size:0.65rem;"><span class="status-dot status-dot-amber"></span>is_simulated</span>
                     </div>
                     <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">
                       ID: <code style="font-family:monospace; color:#cbd5e1;">${c.id}</code> &bull; Criada em ${formatDate(c.createdAt)}

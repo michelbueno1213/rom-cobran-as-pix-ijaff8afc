@@ -51,18 +51,18 @@ export function renderLiquidadosView(currentUser) {
       </div>
 
       <!-- CARD TOTAL GERAL -->
-      <div class="card" style="background: linear-gradient(135deg, #131c2e 0%, #172640 100%); border-color: rgba(16, 185, 129, 0.3);">
+      <div class="card" style="background: linear-gradient(135deg, #0d1627 0%, #112038 100%); border-color: rgba(16, 185, 129, 0.35); box-shadow: 0 8px 32px -4px rgba(0,0,0,0.6), 0 0 28px -6px rgba(16, 185, 129, 0.2);">
         <div style="display:flex; justify-content:space-between; align-items:flex-start;">
           <div>
-            <span class="badge badge-green" style="margin-bottom:12px;">Volume Total Liquidado</span>
-            <div style="font-size:3rem; font-weight:800; color:#ffffff; letter-spacing:-0.03em; margin: 4px 0 10px 0;">
+            <span class="badge badge-green" style="margin-bottom:12px;"><span class="status-dot status-dot-green"></span>Volume Total Liquidado</span>
+            <div class="tabular-nums" style="font-size:3.4rem; font-weight:800; color:#ffffff; letter-spacing:-0.035em; margin: 4px 0 12px 0; text-shadow: 0 0 32px rgba(16, 185, 129, 0.25);">
               R$ 0,00
             </div>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0;">
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0; line-height:1.55;">
               Os valores aparecem aqui após a liquidação real das cobranças.
             </p>
           </div>
-          <div style="color:var(--accent-emerald);">
+          <div class="summary-icon-circle" style="width:64px; height:64px;">
             ${Icons.wallet(36)}
           </div>
         </div>

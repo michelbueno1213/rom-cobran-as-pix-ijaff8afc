@@ -14,54 +14,54 @@ let filterType = 'todas' // 'todas' | 'cobrancas' | 'saques' | 'contas' | 'cupon
 export function getChargeBadge(status) {
   switch (status) {
     case 'Aguardando Pagamento':
-      return `<span class="badge badge-amber">${status}</span>`
+      return `<span class="badge badge-amber"><span class="status-dot status-dot-amber"></span>${status}</span>`
     case 'Em Análise':
-      return `<span class="badge badge-blue">${status}</span>`
+      return `<span class="badge badge-blue"><span class="status-dot status-dot-blue"></span>${status}</span>`
     case 'Pix Confirmado':
     case 'DePix Enviado':
-      return `<span class="badge badge-green">${status}</span>`
+      return `<span class="badge badge-green"><span class="status-dot status-dot-green"></span>${status}</span>`
     case 'Atrasada':
     case 'Erro':
-      return `<span class="badge badge-red">${status}</span>`
+      return `<span class="badge badge-red"><span class="status-dot status-dot-red"></span>${status}</span>`
     case 'Estornada':
     case 'Cancelada':
     case 'Expirada':
     default:
-      return `<span class="badge badge-gray">${status}</span>`
+      return `<span class="badge badge-gray"><span class="status-dot status-dot-gray"></span>${status}</span>`
   }
 }
 
 export function getWithdrawalBadge(status) {
   switch (status) {
     case 'Aguardando Envio':
-      return `<span class="badge badge-amber">${status}</span>`
+      return `<span class="badge badge-amber"><span class="status-dot status-dot-amber"></span>${status}</span>`
     case 'Enviando':
     case 'Em Revisão':
-      return `<span class="badge badge-blue">${status}</span>`
+      return `<span class="badge badge-blue"><span class="status-dot status-dot-blue"></span>${status}</span>`
     case 'Pix Enviado':
-      return `<span class="badge badge-green">${status}</span>`
+      return `<span class="badge badge-green"><span class="status-dot status-dot-green"></span>${status}</span>`
     case 'Erro':
-      return `<span class="badge badge-red">${status}</span>`
+      return `<span class="badge badge-red"><span class="status-dot status-dot-red"></span>${status}</span>`
     case 'Estornado':
     default:
-      return `<span class="badge badge-gray">${status}</span>`
+      return `<span class="badge badge-gray"><span class="status-dot status-dot-gray"></span>${status}</span>`
   }
 }
 
 export function getBillBadge(status) {
   switch (status) {
     case 'Aguardando Envio':
-      return `<span class="badge badge-amber">${status}</span>`
+      return `<span class="badge badge-amber"><span class="status-dot status-dot-amber"></span>${status}</span>`
     case 'Enviando':
     case 'Em Revisão':
-      return `<span class="badge badge-blue">${status}</span>`
+      return `<span class="badge badge-blue"><span class="status-dot status-dot-blue"></span>${status}</span>`
     case 'Conta Paga':
-      return `<span class="badge badge-green">${status}</span>`
+      return `<span class="badge badge-green"><span class="status-dot status-dot-green"></span>${status}</span>`
     case 'Erro':
-      return `<span class="badge badge-red">${status}</span>`
+      return `<span class="badge badge-red"><span class="status-dot status-dot-red"></span>${status}</span>`
     case 'Estornado':
     default:
-      return `<span class="badge badge-gray">${status}</span>`
+      return `<span class="badge badge-gray"><span class="status-dot status-dot-gray"></span>${status}</span>`
   }
 }
 
@@ -197,7 +197,8 @@ export function renderHistoricoView(currentUser) {
                       tipoLabel = 'Pagamento de Conta'
                       badgeClass = 'badge-amber'
                     } else if (item.tipo === 'cupom') {
-                      badgeHtml = '<span class="badge badge-green">Ativo</span>'
+                      badgeHtml =
+                        '<span class="badge badge-green"><span class="status-dot status-dot-green"></span>Ativo</span>'
                       tipoLabel = 'Cupom'
                       badgeClass = 'badge-green'
                     }
