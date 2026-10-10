@@ -76,7 +76,9 @@ export const Router = {
         this.navigate('#/inicio')
         return
       }
-      appEl.innerHTML = renderLoginView()
+      const prefillEmail = sessionStorage.getItem('rom_prefill_email') || ''
+      sessionStorage.removeItem('rom_prefill_email')
+      appEl.innerHTML = renderLoginView(prefillEmail)
       initLoginEvents()
       return
     }
@@ -87,7 +89,10 @@ export const Router = {
         return
       }
       appEl.innerHTML = renderRegisterView()
-      initRegisterEvents()
+      initRegisterEvents((emailToLogin) => {
+        sessionStorage.setItem('rom_prefill_email', emailToLogin)
+        this.navigate('#/entrar')
+      })
       return
     }
 

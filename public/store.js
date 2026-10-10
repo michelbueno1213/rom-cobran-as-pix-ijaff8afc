@@ -1,16 +1,22 @@
 /**
- * Store - Camada de persistência em localStorage
- * - rom_users: lista de contas de comerciantes
- * - rom_session: id do usuário autenticado
- * - Isolamento por usuário: rom_wallets_{userId}, rom_charges_{userId}, rom_links_{userId},
- *   rom_withdrawals_{userId}, rom_activities_{userId}, rom_homolog_charges_{userId},
- *   rom_bill_payments_{userId}, rom_coupons_{userId}
+ * Store - Camada unificada de dados (PocketBase / Skip Cloud + fallback localStorage)
+ *
+ * Funcionalidades:
+ * 1. Bloqueio de e-mail duplicado (case-insensitive, e-mail em minúsculas).
+ * 2. Normalização de e-mail para minúsculas em todo o fluxo (cadastro, login, busca).
+ * 3. Ao sair (logout), limpa APENAS a sessão ativa (token e ID ativo), NUNCA apaga as contas salvas.
+ * 4. Isolamento rigoroso de contas (um e-mail = uma conta).
+ * 5. Integração com o servidor PocketBase para login centralizado entre múltiplos aparelhos.
+ * 6. Fallback local offline resiliente caso o servidor esteja inacessível.
+ * 7. Suporte a sincronização de carteiras, cobranças, homologação e configurações com o servidor.
  */
 
 import { generateUUID } from './utils.js'
 
 const USERS_KEY = 'rom_users'
 const SESSION_KEY = 'rom_session'
+const PB_AUTH_KEY = 'pocketbase_auth'
+const PB_FALLBACK_URL = 'https://rom-cobrancas-pix-d324e.shrd00.internal.goskip.dev'
 
 // Utilitários de leitura/escrita segura em localStorage
 function getLocal(key, defaultValue = null) {
@@ -31,13 +37,75 @@ function setLocal(key, value) {
   }
 }
 
+function getPB() {
+  if (typeof window !== 'undefined' && window.pb) {
+    return window.pb
+  }
+  return null
+}
+
+function getPbUrl() {
+  if (typeof window !== 'undefined' && window.VITE_POCKETBASE_URL) {
+    return window.VITE_POCKETBASE_URL
+  }
+  return PB_FALLBACK_URL
+}
+
 export const Store = {
+  // === UTILITÁRIOS DE E-MAIL ===
+  normalizeEmail(email) {
+    return String(email || '')
+      .trim()
+      .toLowerCase()
+  },
+
   // === AUTENTICAÇÃO E USUÁRIOS ===
   getUsers() {
     return getLocal(USERS_KEY, [])
   },
 
+  saveUsers(users) {
+    setLocal(USERS_KEY, users)
+  },
+
+  // Busca se um e-mail já existe localmente (case-insensitive)
+  findLocalUserByEmail(email) {
+    const cleanEmail = this.normalizeEmail(email)
+    if (!cleanEmail) return null
+    const users = this.getUsers()
+    return users.find((u) => this.normalizeEmail(u.email) === cleanEmail) || null
+  },
+
+  // Retorna o usuário logado no momento (verificando tanto PocketBase quanto sessão local)
   getCurrentUser() {
+    // 1. Tenta recuperar sessão ativa do PocketBase SDK
+    const pb = getPB()
+    if (pb && pb.authStore && pb.authStore.isValid && pb.authStore.record) {
+      const rec = pb.authStore.record
+      const localUsers = this.getUsers()
+      const existing = localUsers.find(
+        (u) => u.id === rec.id || this.normalizeEmail(u.email) === this.normalizeEmail(rec.email),
+      )
+
+      const mergedUser = {
+        id: rec.id,
+        nome: rec.name || existing?.nome || 'Comerciante ROM',
+        email: this.normalizeEmail(rec.email),
+        isAdmin: Boolean(rec.is_admin || existing?.isAdmin),
+        createdAt: rec.created || existing?.createdAt || new Date().toISOString(),
+        settings: {
+          telefone: rec.telefone || existing?.settings?.telefone || '',
+          cnpj: rec.cnpj || existing?.settings?.cnpj || '',
+        },
+      }
+
+      // Sincroniza espelho local do usuário para funcionamento offline
+      this.upsertLocalUser(mergedUser)
+      setLocal(SESSION_KEY, mergedUser.id)
+      return mergedUser
+    }
+
+    // 2. Se o SDK não estiver carregado ou offline, consulta session local
     const userId = getLocal(SESSION_KEY, null)
     if (!userId) return null
     const users = this.getUsers()
@@ -49,24 +117,116 @@ export const Store = {
     return found
   },
 
-  createUser({ nome, email, senha }) {
+  // Atualiza ou insere usuário na lista local sem criar duplicados
+  upsertLocalUser(userData) {
     const users = this.getUsers()
-    const cleanEmail = String(email || '')
-      .trim()
-      .toLowerCase()
+    const cleanEmail = this.normalizeEmail(userData.email)
+    const idx = users.findIndex(
+      (u) => u.id === userData.id || this.normalizeEmail(u.email) === cleanEmail,
+    )
 
-    if (users.some((u) => u.email.toLowerCase() === cleanEmail)) {
-      throw new Error('E-mail já cadastrado no sistema.')
+    if (idx !== -1) {
+      users[idx] = {
+        ...users[idx],
+        ...userData,
+        email: cleanEmail,
+        settings: {
+          ...(users[idx].settings || {}),
+          ...(userData.settings || {}),
+        },
+      }
+    } else {
+      users.push({
+        ...userData,
+        email: cleanEmail,
+      })
+    }
+    this.saveUsers(users)
+  },
+
+  /**
+   * Cadastro com bloqueio de duplicidade e sincronização com servidor
+   */
+  async createUser({ nome, email, senha }) {
+    const cleanEmail = this.normalizeEmail(email)
+    const cleanNome = String(nome || '').trim()
+    const cleanSenha = String(senha || '')
+
+    // 1. Verificação local imediata: se já existe neste dispositivo, BLOQUEIA
+    const localExisting = this.findLocalUserByEmail(cleanEmail)
+    if (localExisting) {
+      const err = new Error('Já existe uma conta com este e-mail. Faça login.')
+      err.code = 'EMAIL_DUPLICATE_LOCAL'
+      throw err
     }
 
+    // 2. Tentar registrar no PocketBase (servidor)
+    const pb = getPB()
+    let serverRecord = null
+    let isServerAdmin = false
+
+    if (pb) {
+      try {
+        // Criação de usuário no PocketBase
+        serverRecord = await pb.collection('users').create({
+          email: cleanEmail,
+          password: cleanSenha,
+          passwordConfirm: cleanSenha,
+          name: cleanNome,
+        })
+
+        // Efetua login automático no servidor para obter token e atualizar sessão
+        const authData = await pb.collection('users').authWithPassword(cleanEmail, cleanSenha)
+        serverRecord = authData.record
+        isServerAdmin = Boolean(serverRecord.is_admin)
+      } catch (pbErr) {
+        // Se o PocketBase acusou que o e-mail já existe
+        const pbStatus = pbErr?.status
+        const pbData = pbErr?.data?.data || {}
+        if (pbStatus === 400 && pbData.email) {
+          const err = new Error('Já existe uma conta com este e-mail. Faça login.')
+          err.code = 'EMAIL_DUPLICATE_SERVER'
+          throw err
+        }
+        // Se for erro de rede/offline, segue para criação local em fallback
+        console.warn('Servidor inacessível durante cadastro, salvando localmente:', pbErr)
+      }
+    } else {
+      // Fallback direto via fetch caso window.pb não esteja inicializado ainda
+      try {
+        const res = await fetch(`${getPbUrl()}/api/collections/users/records`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: cleanEmail,
+            password: cleanSenha,
+            passwordConfirm: cleanSenha,
+            name: cleanNome,
+          }),
+        })
+        if (res.status === 400) {
+          const errData = await res.json().catch(() => ({}))
+          if (errData?.data?.email) {
+            const err = new Error('Já existe uma conta com este e-mail. Faça login.')
+            err.code = 'EMAIL_DUPLICATE_SERVER'
+            throw err
+          }
+        }
+      } catch (netErr) {
+        console.warn('Fetch fallback para servidor falhou:', netErr)
+      }
+    }
+
+    // 3. Persistência local (mantém consistência mesmo offline)
+    const users = this.getUsers()
     const isFirstUser = users.length === 0
     const newUser = {
-      id: generateUUID(),
-      nome: String(nome || '').trim(),
+      id: serverRecord ? serverRecord.id : generateUUID(),
+      nome: cleanNome,
       email: cleanEmail,
-      senha: String(senha || ''),
-      isAdmin: isFirstUser, // Primeira conta criada = administrador
-      createdAt: new Date().toISOString(),
+      senha: cleanSenha, // Salvo localmente para permitir login offline neste aparelho
+      isAdmin: serverRecord ? isServerAdmin : isFirstUser,
+      createdAt: serverRecord?.created || new Date().toISOString(),
       settings: {
         telefone: '',
         cnpj: '',
@@ -74,54 +234,179 @@ export const Store = {
     }
 
     users.push(newUser)
-    setLocal(USERS_KEY, users)
+    this.saveUsers(users)
     this.setSession(newUser.id)
+
     return newUser
   },
 
-  login({ email, senha }) {
-    const cleanEmail = String(email || '')
-      .trim()
-      .toLowerCase()
-    const users = this.getUsers()
-    const found = users.find(
-      (u) => u.email.toLowerCase() === cleanEmail && u.senha === String(senha || ''),
-    )
-    if (!found) {
-      throw new Error('E-mail ou senha inválidos.')
+  /**
+   * Login unificado: tenta servidor PocketBase primeiro; se falhar ou offline, tenta local.
+   * Se a conta existir em outro aparelho e não aqui, ou se o e-mail não existir de forma alguma,
+   * emite a mensagem explicativa requerida.
+   */
+  async login({ email, senha }) {
+    const cleanEmail = this.normalizeEmail(email)
+    const cleanSenha = String(senha || '')
+
+    const localUser = this.findLocalUserByEmail(cleanEmail)
+    const pb = getPB()
+
+    // 1. Tentar login no PocketBase (permite acessar conta criada em outro dispositivo)
+    if (pb) {
+      try {
+        const authData = await pb.collection('users').authWithPassword(cleanEmail, cleanSenha)
+        const rec = authData.record
+
+        const loggedUser = {
+          id: rec.id,
+          nome: rec.name || localUser?.nome || 'Comerciante',
+          email: cleanEmail,
+          senha: cleanSenha,
+          isAdmin: Boolean(rec.is_admin || localUser?.isAdmin),
+          createdAt: rec.created || localUser?.createdAt || new Date().toISOString(),
+          settings: {
+            telefone: rec.telefone || localUser?.settings?.telefone || '',
+            cnpj: rec.cnpj || localUser?.settings?.cnpj || '',
+          },
+        }
+
+        // Salva cópia neste aparelho para permitir login offline futuro
+        this.upsertLocalUser(loggedUser)
+        this.setSession(loggedUser.id)
+
+        // Tenta puxar dados remotos do usuário (carteiras, etc.)
+        this.syncFromServer(loggedUser.id).catch((e) => console.warn('Sync inicial pós-login:', e))
+
+        return loggedUser
+      } catch (serverErr) {
+        const status = serverErr?.status
+        // Se o servidor rejeitou especificamente por credenciais inválidas (400)
+        // e não temos localUser correspondente
+        if (status === 400 && !localUser) {
+          throw new Error('E-mail ou senha inválidos.')
+        }
+        // Se o servidor estiver offline (status 0 ou erro de rede), tenta login local abaixo
+        console.warn('Tentativa de login no servidor falhou/offline, tentando local:', serverErr)
+      }
     }
-    this.setSession(found.id)
-    return found
+
+    // 2. Fallback de Login Local
+    if (localUser) {
+      if (localUser.senha && localUser.senha !== cleanSenha) {
+        throw new Error('E-mail ou senha inválidos.')
+      }
+      this.setSession(localUser.id)
+      return localUser
+    }
+
+    // 3. E-mail não encontrado neste dispositivo nem no servidor
+    const err = new Error(
+      'As contas ficam salvas neste dispositivo. Se você criou a conta em outro aparelho, use o mesmo e-mail para criar sua conta aqui ou aguarde o login centralizado (em implantação).',
+    )
+    err.code = 'ACCOUNT_NOT_FOUND_DEVICE'
+    throw err
   },
 
   setSession(userId) {
     setLocal(SESSION_KEY, userId)
   },
 
+  /**
+   * Sair da conta: limpa APENAS a sessão ativa.
+   * NUNCA limpa as contas nem os dados salvos!
+   */
   clearSession() {
     try {
       localStorage.removeItem(SESSION_KEY)
+      const pb = getPB()
+      if (pb && pb.authStore) {
+        pb.authStore.clear()
+      }
     } catch (err) {
-      console.error(err)
+      console.error('Erro ao encerrar sessão:', err)
     }
   },
 
-  updateUserSettings(userId, { nome, telefone, cnpj }) {
+  async updateUserSettings(userId, { nome, telefone, cnpj }) {
+    const cleanNome = (nome || '').trim()
+    const cleanTel = (telefone || '').trim()
+    const cleanCnpj = (cnpj || '').trim()
+
+    // 1. Atualiza no servidor se logado no PocketBase
+    const pb = getPB()
+    if (pb && pb.authStore && pb.authStore.isValid && pb.authStore.record?.id === userId) {
+      try {
+        await pb.collection('users').update(userId, {
+          name: cleanNome,
+          telefone: cleanTel,
+          cnpj: cleanCnpj,
+        })
+      } catch (err) {
+        console.warn('Erro ao atualizar configurações no servidor:', err)
+      }
+    }
+
+    // 2. Atualiza localmente
     const users = this.getUsers()
     const idx = users.findIndex((u) => u.id === userId)
     if (idx === -1) throw new Error('Usuário não encontrado.')
 
-    if (nome) users[idx].nome = nome.trim()
+    if (cleanNome) users[idx].nome = cleanNome
     users[idx].settings = {
       ...(users[idx].settings || {}),
-      telefone: telefone ? telefone.trim() : '',
-      cnpj: cnpj ? cnpj.trim() : '',
+      telefone: cleanTel,
+      cnpj: cleanCnpj,
     }
-    setLocal(USERS_KEY, users)
+    this.saveUsers(users)
     return users[idx]
   },
 
-  // === CARTEIRAS LIQUID (Isoladas por userId) ===
+  // Sincronização em background do servidor para o dispositivo
+  async syncFromServer(userId) {
+    const pb = getPB()
+    if (!pb || !pb.authStore || !pb.authStore.isValid) return
+
+    try {
+      // 1. Carteiras
+      const remoteWallets = await pb.collection('rom_wallets').getFullList({
+        sort: 'created',
+      })
+      if (remoteWallets && remoteWallets.length > 0) {
+        const localList = remoteWallets.map((w) => ({
+          id: w.id,
+          apelido: w.apelido,
+          address: w.address,
+          is_default: Boolean(w.is_default),
+          createdAt: w.created,
+        }))
+        this.saveWallets(userId, localList)
+      }
+
+      // 2. Cobranças de Homologação
+      const remoteHomolog = await pb.collection('rom_homolog_charges').getFullList({
+        sort: '-created',
+      })
+      if (remoteHomolog && remoteHomolog.length > 0) {
+        const localList = remoteHomolog.map((c) => ({
+          id: c.id,
+          userId: c.user_id,
+          valor: c.valor,
+          cliente: c.cliente || '',
+          descricao: c.descricao || '',
+          status: c.status,
+          is_simulated: true,
+          createdAt: c.created,
+          updatedAt: c.updated,
+        }))
+        this.saveHomologCharges(userId, localList)
+      }
+    } catch (err) {
+      console.warn('Sync em segundo plano não pôde ser completado:', err)
+    }
+  },
+
+  // === CARTEIRAS LIQUID (Isoladas por userId + Servidor) ===
   getWallets(userId) {
     if (!userId) return []
     return getLocal(`rom_wallets_${userId}`, [])
@@ -153,6 +438,27 @@ export const Store = {
     }
     list.push(newWallet)
     this.saveWallets(userId, list)
+
+    // Tentar persistir no PocketBase
+    const pb = getPB()
+    if (pb && pb.authStore && pb.authStore.isValid && pb.authStore.record?.id === userId) {
+      pb.collection('rom_wallets')
+        .create({
+          user_id: userId,
+          apelido: newWallet.apelido,
+          address: newWallet.address,
+          is_default: newWallet.is_default,
+        })
+        .then((record) => {
+          // Atualiza id local para o do servidor se desejar
+          const updated = this.getWallets(userId).map((w) =>
+            w.id === newWallet.id ? { ...w, serverId: record.id } : w,
+          )
+          this.saveWallets(userId, updated)
+        })
+        .catch((err) => console.warn('Erro ao salvar carteira no PocketBase:', err))
+    }
+
     return newWallet
   },
 
@@ -163,6 +469,24 @@ export const Store = {
       is_default: w.id === walletId,
     }))
     this.saveWallets(userId, updated)
+
+    // Sincroniza no servidor
+    const pb = getPB()
+    if (pb && pb.authStore && pb.authStore.isValid) {
+      pb.collection('rom_wallets')
+        .getFullList()
+        .then((items) => {
+          items.forEach((item) => {
+            const isDef =
+              item.id === walletId || item.address === updated.find((w) => w.is_default)?.address
+            pb.collection('rom_wallets')
+              .update(item.id, { is_default: isDef })
+              .catch(() => {})
+          })
+        })
+        .catch(() => {})
+    }
+
     return updated
   },
 
@@ -174,6 +498,22 @@ export const Store = {
       remaining[0].is_default = true
     }
     this.saveWallets(userId, remaining)
+
+    // Exclui do servidor
+    const pb = getPB()
+    if (pb && pb.authStore && pb.authStore.isValid && toDelete) {
+      pb.collection('rom_wallets')
+        .getFullList({ filter: `address="${toDelete.address}"` })
+        .then((items) => {
+          if (items.length > 0) {
+            pb.collection('rom_wallets')
+              .delete(items[0].id)
+              .catch(() => {})
+          }
+        })
+        .catch(() => {})
+    }
+
     return remaining
   },
 
@@ -209,6 +549,22 @@ export const Store = {
     }
     list.unshift(newCharge)
     this.saveHomologCharges(userId, list)
+
+    // Salva no PocketBase se conectado
+    const pb = getPB()
+    if (pb && pb.authStore && pb.authStore.isValid && pb.authStore.record?.id === userId) {
+      pb.collection('rom_homolog_charges')
+        .create({
+          user_id: userId,
+          valor: newCharge.valor,
+          cliente: newCharge.cliente,
+          descricao: newCharge.descricao,
+          status: newCharge.status,
+          is_simulated: true,
+        })
+        .catch((err) => console.warn('Erro ao salvar cobrança homolog no PocketBase:', err))
+    }
+
     return newCharge
   },
 
@@ -219,6 +575,22 @@ export const Store = {
     item.status = newStatus
     item.updatedAt = new Date().toISOString()
     this.saveHomologCharges(userId, list)
+
+    // Atualiza no servidor se possível
+    const pb = getPB()
+    if (pb && pb.authStore && pb.authStore.isValid) {
+      pb.collection('rom_homolog_charges')
+        .getFullList({ filter: `created~"${item.createdAt.slice(0, 16)}"` })
+        .then((records) => {
+          if (records.length > 0) {
+            pb.collection('rom_homolog_charges')
+              .update(records[0].id, { status: newStatus })
+              .catch(() => {})
+          }
+        })
+        .catch(() => {})
+    }
+
     return item
   },
 
@@ -229,8 +601,6 @@ export const Store = {
   // === BUSCA GLOBAL DE COBRANÇAS (para a página pública #/pagar/:id) ===
   findChargeById(chargeId) {
     if (!chargeId) return null
-    // 1. Procura em todos os namespaces de homologação (rom_homolog_charges_*)
-    // 2. Procura em todos os namespaces de cobranças reais (rom_charges_*)
     try {
       const keys = Object.keys(localStorage)
 
@@ -240,7 +610,6 @@ export const Store = {
           const list = getLocal(k, [])
           const found = list.find((c) => c.id === chargeId)
           if (found) {
-            // Busca dados do comerciante
             const users = this.getUsers()
             const owner = users.find((u) => u.id === found.userId)
             return {
