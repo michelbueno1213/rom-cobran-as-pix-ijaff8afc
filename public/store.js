@@ -4,7 +4,7 @@
  * - rom_session: id do usuário autenticado
  * - Isolamento por usuário: rom_wallets_{userId}, rom_charges_{userId}, rom_links_{userId},
  *   rom_withdrawals_{userId}, rom_activities_{userId}, rom_homolog_charges_{userId},
- *   rom_bill_payments_{userId}, rom_coupons_{userId}, rom_swaps_{userId}
+ *   rom_bill_payments_{userId}, rom_coupons_{userId}
  */
 
 import { generateUUID } from './utils.js'
@@ -302,11 +302,5 @@ export const Store = {
   getCoupons(userId) {
     if (!userId) return []
     return getLocal(`rom_coupons_${userId}`, [])
-  },
-
-  // === TROCAS / SWAPS (rom_swaps_{userId}) ===
-  getSwaps(userId) {
-    if (!userId) return []
-    return getLocal(`rom_swaps_${userId}`, [])
   },
 }

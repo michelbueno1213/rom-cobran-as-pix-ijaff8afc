@@ -2,13 +2,13 @@
  * View: Nova Cobrança (#/nova-cobranca)
  * Valor com máscara BRL
  * Carteira de recebimento: chip se houver padrão, formulário inline validando lq1/ex1 se não houver
- * Dropdown "Ativo de liquidação" (multi-ativos paridade DeFlow, padrão DePix Liquid)
+ * Ativo fixo: DePix (Liquid) — Pix entra, DePix sai na sua carteira Liquid
  * Cliente e descrição opcionais
  * Botão "Gerar Cobrança Pix" dispara TOAST "Em breve" e NUNCA gera QR fictício
  */
 
 import { Icons } from '../icons.js'
-import { attachBrlMask, isValidLiquidAddress, MULTI_ASSETS } from '../utils.js'
+import { attachBrlMask, isValidLiquidAddress } from '../utils.js'
 import { Store } from '../store.js'
 import { showEmBreveToast, showToast } from '../toast.js'
 
@@ -22,7 +22,7 @@ export function renderNovaCobrancaView(currentUser) {
     <div style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:22px;">
       <div>
         <h1 style="margin-bottom:6px;">Nova Cobrança</h1>
-        <p>Crie uma ordem de pagamento Pix para receber DePix na rede Liquid.</p>
+        <p>Pix entra, DePix sai na sua carteira Liquid.</p>
       </div>
 
       <div class="card">
@@ -38,19 +38,20 @@ export function renderNovaCobrancaView(currentUser) {
               style="font-size:1.6rem; font-weight:800; color:var(--accent-emerald); height:56px;"
               required
             />
-            <span class="form-hint">O valor em reais será liquidado no ativo selecionado.</span>
+            <span class="form-hint">Pix entra, DePix sai na sua carteira Liquid (paridade 1:1 BRL).</span>
           </div>
 
-          <!-- SELETOR DE ATIVO DE LIQUIDAÇÃO (PARIDADE DEFLOW) -->
+          <!-- ATIVO FIXO DE LIQUIDAÇÃO: DEPIX (LIQUID) -->
           <div class="form-group" style="margin-top:16px;">
-            <label class="form-label" for="cobranca-asset">Ativo de liquidação</label>
-            <select id="cobranca-asset" class="form-select">
-              ${MULTI_ASSETS.map(
-                (a) =>
-                  `<option value="${a.id}" ${a.id === 'depix_liquid' ? 'selected' : ''}>${a.label}</option>`,
-              ).join('')}
-            </select>
-            <span class="form-hint">O pagador paga via Pix e você recebe na moeda/rede escolhida.</span>
+            <label class="form-label">Liquidação exclusiva</label>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:rgba(11, 18, 32, 0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-md);">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="color:var(--accent-emerald);">${Icons.shield(18)}</span>
+                <span style="font-weight:600; font-size:0.92rem; color:var(--text-main);">DePix (Rede Liquid)</span>
+              </div>
+              <span class="badge badge-green">Pix entra → DePix sai</span>
+            </div>
+            <span class="form-hint">A conversão é exclusivamente de Pix para DePix na sua carteira Liquid.</span>
           </div>
 
           <!-- SEÇÃO CARTEIRA DE RECEBIMENTO -->

@@ -1,7 +1,7 @@
 /**
  * View: Histórico (#/historico)
- * Lista unificada com filtros estendidos:
- * - Todas / Cobranças / Saques / Contas e Boletos / Cupons / Trocas
+ * Lista unificada com filtros:
+ * - Todas / Cobranças / Saques / Contas e Boletos / Cupons
  * Badges de status por tipo coerentes com as cores existentes
  */
 
@@ -9,7 +9,7 @@ import { Icons } from '../icons.js'
 import { formatBrl, formatDate } from '../utils.js'
 import { Store } from '../store.js'
 
-let filterType = 'todas' // 'todas' | 'cobrancas' | 'saques' | 'contas' | 'cupons' | 'trocas'
+let filterType = 'todas' // 'todas' | 'cobrancas' | 'saques' | 'contas' | 'cupons'
 
 export function getChargeBadge(status) {
   switch (status) {
@@ -65,23 +65,6 @@ export function getBillBadge(status) {
   }
 }
 
-export function getSwapBadge(status) {
-  switch (status) {
-    case 'Aguardando Envio':
-      return `<span class="badge badge-amber">${status}</span>`
-    case 'Enviando':
-    case 'Em Revisão':
-      return `<span class="badge badge-blue">${status}</span>`
-    case 'Concluída':
-      return `<span class="badge badge-green">${status}</span>`
-    case 'Erro':
-      return `<span class="badge badge-red">${status}</span>`
-    case 'Estornado':
-    default:
-      return `<span class="badge badge-gray">${status}</span>`
-  }
-}
-
 export function renderHistoricoView(currentUser) {
   const charges = Store.getCharges(currentUser.id).map((c) => ({
     ...c,
@@ -103,12 +86,7 @@ export function renderHistoricoView(currentUser) {
     tipo: 'cupom',
   }))
 
-  const swaps = Store.getSwaps(currentUser.id).map((sw) => ({
-    ...sw,
-    tipo: 'troca',
-  }))
-
-  let unified = [...charges, ...withdrawals, ...billPayments, ...coupons, ...swaps]
+  let unified = [...charges, ...withdrawals, ...billPayments, ...coupons]
 
   if (filterType === 'cobrancas') {
     unified = unified.filter((i) => i.tipo === 'cobranca')
@@ -118,8 +96,6 @@ export function renderHistoricoView(currentUser) {
     unified = unified.filter((i) => i.tipo === 'conta')
   } else if (filterType === 'cupons') {
     unified = unified.filter((i) => i.tipo === 'cupom')
-  } else if (filterType === 'trocas') {
-    unified = unified.filter((i) => i.tipo === 'troca')
   }
 
   // Ordena por data decrescente
@@ -130,10 +106,10 @@ export function renderHistoricoView(currentUser) {
       <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
         <div>
           <h1 style="margin-bottom:6px;">Histórico de Movimentações</h1>
-          <p>Visão unificada de cobranças, saques, pagamentos de contas, cupons e trocas.</p>
+          <p>Visão unificada de cobranças Pix, saques DePix, pagamentos de contas e cupons.</p>
         </div>
 
-        <!-- FILTRO POR TIPO ESTENDIDO -->
+        <!-- FILTRO POR TIPO -->
         <div style="display:inline-flex; background:rgba(19, 28, 46, 0.8); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:3px; flex-wrap:wrap; gap:2px;">
           <button
             type="button"
@@ -174,14 +150,6 @@ export function renderHistoricoView(currentUser) {
             style="border:none;"
           >
             Cupons
-          </button>
-          <button
-            type="button"
-            id="filtro-trocas"
-            class="btn btn-sm ${filterType === 'trocas' ? 'btn-primary' : 'btn-outline'}"
-            style="border:none;"
-          >
-            Trocas
           </button>
         </div>
       </div>
@@ -232,10 +200,6 @@ export function renderHistoricoView(currentUser) {
                       badgeHtml = '<span class="badge badge-green">Ativo</span>'
                       tipoLabel = 'Cupom'
                       badgeClass = 'badge-green'
-                    } else if (item.tipo === 'troca') {
-                      badgeHtml = getSwapBadge(item.status || 'Concluída')
-                      tipoLabel = 'Troca (Swap)'
-                      badgeClass = 'badge-blue'
                     }
 
                     return `
@@ -278,7 +242,6 @@ export function initHistoricoEvents(currentUser, reRender) {
   const btnSaques = document.getElementById('filtro-saques')
   const btnContas = document.getElementById('filtro-contas')
   const btnCupons = document.getElementById('filtro-cupons')
-  const btnTrocas = document.getElementById('filtro-trocas')
 
   if (btnTodas) {
     btnTodas.addEventListener('click', () => {
@@ -307,12 +270,6 @@ export function initHistoricoEvents(currentUser, reRender) {
   if (btnCupons) {
     btnCupons.addEventListener('click', () => {
       filterType = 'cupons'
-      reRender()
-    })
-  }
-  if (btnTrocas) {
-    btnTrocas.addEventListener('click', () => {
-      filterType = 'trocas'
       reRender()
     })
   }

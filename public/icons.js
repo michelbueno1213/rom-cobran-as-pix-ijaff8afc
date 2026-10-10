@@ -4,15 +4,21 @@
 export const Icons = {
   logo: (size = 28) => `
     <svg width="${size}" height="${size}" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-svg">
-      <!-- Base do cofre / santuário preservador: traço sóbrio 1.5px -->
-      <path d="M16 3.5L6.5 7.5V15.5C6.5 22 10.8 27.5 16 29C21.2 27.5 25.5 22 25.5 15.5V7.5L16 3.5Z" fill="#111A2B" stroke="#475569" stroke-width="1.5" stroke-linejoin="round"/>
-      <!-- Fenda / visor interno sutil de custódia protegida -->
-      <path d="M11.5 13C11.5 11 13.5 9.5 16 9.5C18.5 9.5 20.5 11 20.5 13C20.5 16.2 16 19.5 16 19.5C16 19.5 11.5 16.2 11.5 13Z" stroke="#334155" stroke-width="1.2" stroke-linejoin="round"/>
-      <!-- Pálpebra / fenda horizontal preservadora -->
-      <line x1="12" y1="13.5" x2="20" y2="13.5" stroke="#64748B" stroke-width="1.4" stroke-linecap="round"/>
-      <!-- Micro-acento esmeralda dessaturado no centro do santuário -->
-      <circle cx="16" cy="13.5" r="1.25" fill="#2DD4BF"/>
-      <path d="M16 18V22.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Fundo protetor escuro sutil -->
+      <circle cx="16" cy="16" r="14" fill="#101726" stroke="#334155" stroke-width="1.5"/>
+      <!-- Chapéu / aba incógnito anônimo (silhueta secreta) -->
+      <path d="M7 14.5C9.5 13.8 12.5 13.5 16 13.5C19.5 13.5 22.5 13.8 25 14.5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M10 13.5L11.5 8C11.8 6.8 12.8 6 14 6H18C19.2 6 20.2 6.8 20.5 8L22 13.5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Faixa discreta na copa do chapéu -->
+      <path d="M10.8 11.5H21.2" stroke="#475569" stroke-width="1.2" stroke-linecap="round"/>
+      <!-- Óculos / visor sigiloso tipo incógnito -->
+      <rect x="9.5" y="17.5" width="5.5" height="4" rx="1.5" stroke="#E2E8F0" stroke-width="1.5"/>
+      <rect x="17" y="17.5" width="5.5" height="4" rx="1.5" stroke="#E2E8F0" stroke-width="1.5"/>
+      <line x1="15" y1="19.5" x2="17" y2="19.5" stroke="#E2E8F0" stroke-width="1.5"/>
+      <!-- Gola / colarinho levantado secreto -->
+      <path d="M10 25.5C11.5 24.2 13.5 23.5 16 23.5C18.5 23.5 20.5 24.2 22 25.5" stroke="#64748B" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Micro-acento esmeralda dessaturado secreto (#2DD4BF) -->
+      <circle cx="16" cy="19.5" r="1.1" fill="#2DD4BF"/>
     </svg>
   `,
 

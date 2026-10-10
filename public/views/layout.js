@@ -3,7 +3,6 @@
  * Sidebar fixa (desktop) / Bottom Nav (mobile) / Rodapé fixo / Menu Homologação condicional
  * Atualizado com paridade DeFlow:
  * - Pagar Contas (#/pagar-contas) entre Saques e Histórico
- * - Trocar (#/trocar) entre Carteiras Liquid e Valores Liquidados
  * - Cupons (#/cupons) na seção Conta
  * - Link "Privacidade" no rodapé do painel
  */
@@ -22,7 +21,6 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
     { route: '#/pagar-contas', label: 'Pagar Contas', icon: Icons.receipt() },
     { route: '#/historico', label: 'Histórico', icon: Icons.history() },
     { route: '#/carteiras', label: 'Carteiras Liquid', icon: Icons.wallet() },
-    { route: '#/trocar', label: 'Trocar (Swap)', icon: Icons.repeat() },
   ]
 
   const accountItems = [
@@ -129,7 +127,6 @@ export function renderDashboardLayout({ currentUser, currentRoute, contentHtml }
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
             <a href="#/pagar-contas" class="btn-icon" aria-label="Pagar Contas" title="Pagar Contas">${Icons.receipt(18)}</a>
-            <a href="#/trocar" class="btn-icon" aria-label="Trocar" title="Trocar">${Icons.repeat(18)}</a>
             <a href="#/config" class="btn-icon" aria-label="Configurações">${Icons.settings(18)}</a>
             <button id="btn-mobile-logout" class="btn-icon" aria-label="Sair">${Icons.logOut(18)}</button>
           </div>

@@ -7,7 +7,7 @@
  * - #/entrar, #/criar-conta (se logado -> #/inicio)
  * - #/pagar/:id (pública, sem login)
  * - #/inicio, #/nova-cobranca, #/links, #/saques, #/pagar-contas, #/historico, #/carteiras,
- *   #/trocar, #/liquidados, #/cupons, #/config, #/suporte, #/homologacao -> exigem sessão
+ *   #/liquidados, #/cupons, #/config, #/suporte, #/homologacao -> exigem sessão
  * - #/homologacao: exige isAdmin === true (se não admin -> #/inicio com toast)
  */
 
@@ -29,7 +29,6 @@ import { renderSaquesView, initSaquesEvents } from './views/saques.js'
 import { renderPagarContasView, initPagarContasEvents } from './views/pagar-contas.js'
 import { renderHistoricoView, initHistoricoEvents } from './views/historico.js'
 import { renderCarteirasView, initCarteirasEvents } from './views/carteiras.js'
-import { renderTrocarView, initTrocarEvents } from './views/trocar.js'
 import { renderLiquidadosView, initLiquidadosEvents } from './views/liquidados.js'
 import { renderCuponsView, initCuponsEvents } from './views/cupons.js'
 import { renderConfigView, initConfigEvents } from './views/config.js'
@@ -155,11 +154,6 @@ export const Router = {
       case '#/carteiras':
         contentHtml = renderCarteirasView(currentUser)
         initCallback = () => initCarteirasEvents(currentUser, reRender)
-        break
-
-      case '#/trocar':
-        contentHtml = renderTrocarView(currentUser)
-        initCallback = () => initTrocarEvents(currentUser, reRender)
         break
 
       case '#/liquidados':

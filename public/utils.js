@@ -14,98 +14,16 @@ export const MSG_RODAPE =
   'Emissão real de cobranças habilitada somente após aprovação da provedora e implantação das credenciais.'
 
 /**
- * Lista oficial de Multi-Ativos e Redes suportadas (paridade DeFlow)
+ * Ativo único oficial: DePix na rede Liquid
+ * A plataforma opera exclusivamente com Pix entra e DePix sai na carteira Liquid.
  */
-export const MULTI_ASSETS = [
-  {
-    id: 'depix_liquid',
-    symbol: 'DePix',
-    name: 'DePix',
-    network: 'Liquid',
-    label: 'DePix (Liquid)',
-  },
-  {
-    id: 'usdt_polygon',
-    symbol: 'USDT',
-    name: 'Tether USD',
-    network: 'Polygon',
-    label: 'USDT (Polygon)',
-  },
-  {
-    id: 'usdt_solana',
-    symbol: 'USDT',
-    name: 'Tether USD',
-    network: 'Solana',
-    label: 'USDT (Solana)',
-  },
-  {
-    id: 'usdt_ethereum',
-    symbol: 'USDT',
-    name: 'Tether USD',
-    network: 'Ethereum',
-    label: 'USDT (Ethereum)',
-  },
-  { id: 'usdt_tron', symbol: 'USDT', name: 'Tether USD', network: 'Tron', label: 'USDT (Tron)' },
-  {
-    id: 'usdt_arbitrum',
-    symbol: 'USDT',
-    name: 'Tether USD',
-    network: 'Arbitrum',
-    label: 'USDT (Arbitrum)',
-  },
-  {
-    id: 'usdt_liquid',
-    symbol: 'USDT',
-    name: 'Tether USD',
-    network: 'Liquid',
-    label: 'USDT (Liquid)',
-  },
-  {
-    id: 'usdc_ethereum',
-    symbol: 'USDC',
-    name: 'USD Coin',
-    network: 'Ethereum',
-    label: 'USDC (Ethereum)',
-  },
-  {
-    id: 'usdc_polygon',
-    symbol: 'USDC',
-    name: 'USD Coin',
-    network: 'Polygon',
-    label: 'USDC (Polygon)',
-  },
-  {
-    id: 'usdc_solana',
-    symbol: 'USDC',
-    name: 'USD Coin',
-    network: 'Solana',
-    label: 'USDC (Solana)',
-  },
-  {
-    id: 'usdc_bsc',
-    symbol: 'USDC',
-    name: 'USD Coin',
-    network: 'BNB Smart Chain',
-    label: 'USDC (BNB Smart Chain)',
-  },
-  { id: 'usdc_base', symbol: 'USDC', name: 'USD Coin', network: 'Base', label: 'USDC (Base)' },
-  { id: 'btc_liquid', symbol: 'BTC', name: 'Bitcoin', network: 'Liquid', label: 'BTC (Liquid)' },
-  { id: 'btc_onchain', symbol: 'BTC', name: 'Bitcoin', network: 'Onchain', label: 'BTC (Onchain)' },
-  {
-    id: 'btc_lightning',
-    symbol: 'BTC',
-    name: 'Bitcoin',
-    network: 'Lightning',
-    label: 'BTC (Lightning)',
-  },
-  {
-    id: 'usdg_xlayer',
-    symbol: 'USDG',
-    name: 'Global Dollar',
-    network: 'xLayer',
-    label: 'USDG (xLayer)',
-  },
-]
+export const PRIMARY_ASSET = {
+  id: 'depix_liquid',
+  symbol: 'DePix',
+  name: 'DePix',
+  network: 'Liquid',
+  label: 'DePix (Liquid)',
+}
 
 export const brlFormatter = new Intl.NumberFormat('pt-BR', {
   style: 'currency',

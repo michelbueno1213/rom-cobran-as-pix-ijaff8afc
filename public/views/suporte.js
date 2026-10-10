@@ -34,7 +34,7 @@ export function renderSuporteView() {
     },
     {
       q: 'Quais ativos a ROM suporta?',
-      a: 'A ROM suporta DePix (Liquid), USDT (Polygon, Solana, Ethereum, Tron, Arbitrum, Liquid), USDC (Ethereum, Polygon, Solana, BNB Smart Chain, Base), BTC (Liquid, Onchain, Lightning) e USDG (xLayer).',
+      a: 'A ROM opera exclusivamente com Pix na entrada e DePix na rede Liquid na saída. Não há custódia de outros ativos: o pagador paga em Pix e você recebe diretamente DePix na sua carteira Liquid soberana.',
     },
   ]
 

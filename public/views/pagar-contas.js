@@ -1,14 +1,14 @@
 /**
  * View: Pagar Contas (#/pagar-contas)
- * Paridade DeFlow: Boletos e Pix Cobrança / QR Code direto da carteira
+ * Boletos e Pix Cobrança / QR Code pagos com DePix na rede Liquid
  * Duas abas: "Boletos" (código de barras / 47 dígitos FEBRABAN) e "Pix Cobrança / QR Code"
- * Seletor "Pagar com:" multi-ativo (padrão DePix Liquid)
+ * Pagamento com DePix na carteira Liquid
  * Botão "Pagar Agora" -> Mensagem exata "Em breve" (toast âmbar + banner)
  * Estado vazio ilustrado
  */
 
 import { Icons } from '../icons.js'
-import { MULTI_ASSETS, attachBrlMask } from '../utils.js'
+import { attachBrlMask } from '../utils.js'
 import { Store } from '../store.js'
 import { showEmBreveToast } from '../toast.js'
 
@@ -86,13 +86,10 @@ export function renderPagarContasView(currentUser) {
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="boleto-asset">Pagar com</label>
-                <select id="boleto-asset" class="form-select">
-                  ${MULTI_ASSETS.map(
-                    (a) =>
-                      `<option value="${a.id}" ${a.id === 'depix_liquid' ? 'selected' : ''}>${a.label}</option>`,
-                  ).join('')}
-                </select>
+                <label class="form-label">Pagar com</label>
+                <div style="display:flex; align-items:center; height:42px; padding:0 14px; background:rgba(11, 18, 32, 0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-md); font-weight:600; font-size:0.9rem; color:var(--text-main);">
+                  DePix (Liquid)
+                </div>
               </div>
             </div>
 
@@ -124,13 +121,10 @@ export function renderPagarContasView(currentUser) {
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="pix-asset">Pagar com</label>
-                <select id="pix-asset" class="form-select">
-                  ${MULTI_ASSETS.map(
-                    (a) =>
-                      `<option value="${a.id}" ${a.id === 'depix_liquid' ? 'selected' : ''}>${a.label}</option>`,
-                  ).join('')}
-                </select>
+                <label class="form-label">Pagar com</label>
+                <div style="display:flex; align-items:center; height:42px; padding:0 14px; background:rgba(11, 18, 32, 0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-md); font-weight:600; font-size:0.9rem; color:var(--text-main);">
+                  DePix (Liquid)
+                </div>
               </div>
             </div>
 
@@ -145,7 +139,7 @@ export function renderPagarContasView(currentUser) {
       <!-- LISTA DE PAGAMENTOS REALIZADOS (ESTADO VAZIO) -->
       <div class="card">
         <h3 class="card-title">Histórico de pagamentos de contas</h3>
-        <p class="card-desc">Boletos e Pix liquidados diretamente dos seus ativos</p>
+        <p class="card-desc">Boletos e Pix liquidados diretamente em DePix da sua carteira Liquid</p>
 
         ${
           payments.length === 0

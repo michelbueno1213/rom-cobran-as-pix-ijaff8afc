@@ -1,8 +1,7 @@
 /**
  * View: Saques (#/saques)
  * Texto exato: "Você envia DePix da sua carteira Liquid para o endereço do saque e o valor equivalente cai na chave Pix informada."
- * Atualização paridade DeFlow:
- * - Dropdown "Ativo de saque" (multi-ativos, padrão DePix Liquid)
+ * Operação exclusiva: DePix (Rede Liquid) → Chave Pix
  * Valor (R$) com máscara BRL
  * Chave Pix com tipo (CPF, CNPJ, e-mail, telefone, aleatória) + favorecido opcional
  * Botão "Solicitar Saque" dispara "Em breve" (bloqueado)
@@ -10,7 +9,7 @@
  */
 
 import { Icons } from '../icons.js'
-import { attachBrlMask, MULTI_ASSETS } from '../utils.js'
+import { attachBrlMask } from '../utils.js'
 import { showEmBreveToast } from '../toast.js'
 
 export function renderSaquesView() {
@@ -25,19 +24,20 @@ export function renderSaquesView() {
 
       <!-- FORMULÁRIO DE SAQUE -->
       <div class="card">
-        <h2 class="card-title">${Icons.withdraw(20)} Solicitar Conversão Cripto → Pix</h2>
-        <p class="card-desc">Informe o ativo de origem, o valor e a chave Pix bancária de destino.</p>
+        <h2 class="card-title">${Icons.withdraw(20)} Solicitar Conversão DePix → Pix</h2>
+        <p class="card-desc">Informe o valor em DePix e a chave Pix bancária de destino.</p>
 
         <form id="form-saque" novalidate>
-          <!-- ATIVO DE ORIGEM DO SAQUE -->
+          <!-- ATIVO FIXO DE ORIGEM: DEPIX (LIQUID) -->
           <div class="form-group">
-            <label class="form-label" for="saque-asset">Ativo de origem</label>
-            <select id="saque-asset" class="form-select">
-              ${MULTI_ASSETS.map(
-                (a) =>
-                  `<option value="${a.id}" ${a.id === 'depix_liquid' ? 'selected' : ''}>${a.label}</option>`,
-              ).join('')}
-            </select>
+            <label class="form-label">Ativo de origem</label>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:rgba(11, 18, 32, 0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-md);">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="color:var(--accent-emerald);">${Icons.wallet(18)}</span>
+                <span style="font-weight:600; font-size:0.92rem; color:var(--text-main);">DePix (Liquid)</span>
+              </div>
+              <span class="badge badge-green">Rede Liquid</span>
+            </div>
           </div>
 
           <div class="form-group">

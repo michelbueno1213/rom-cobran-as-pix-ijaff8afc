@@ -1,15 +1,15 @@
 /**
  * View: Início (#/inicio)
- * Atualizada com paridade DeFlow:
+ * Conversão exclusiva Pix → DePix (Liquid):
  * - Banner "Em breve" fixo
  * - Card "Valores Liquidados" com R$ 0,00 e nota
- * - Card "Seus ativos" multi-cripto (DePix Liquid, USDT, USDC, BTC, USDG) com badge "Em breve"
- * - Ações rápidas estendidas (incluindo Pagar Contas e Trocar)
+ * - Card informativo da conversão exclusiva Pix entra, DePix sai na sua carteira Liquid
+ * - Ações rápidas diretas (Nova Cobrança, Meus Links, Pagar Contas, Saque, Carteiras Liquid)
  * - Últimas movimentações (vazio ilustrado)
  */
 
 import { Icons } from '../icons.js'
-import { MSG_EM_BREVE, MULTI_ASSETS, formatBrl, formatDate } from '../utils.js'
+import { MSG_EM_BREVE, formatBrl, formatDate } from '../utils.js'
 import { Store } from '../store.js'
 
 export function renderInicioView(currentUser) {
@@ -44,51 +44,45 @@ export function renderInicioView(currentUser) {
         </div>
 
         <p style="font-size:0.82rem; color:var(--text-muted);">
-          Os valores aparecem aqui após a liquidação real das cobranças.
+          Pix entra, DePix sai na sua carteira Liquid. Os valores aparecem aqui após a liquidação real das cobranças.
         </p>
       </div>
 
-      <!-- CARD MULTI-ATIVOS: SEUS ATIVOS (PARIDADE DEFLOW) -->
+      <!-- CARD EXCLUSIVO PIX → DEPIX (LIQUID) -->
       <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
           <div>
-            <h3 class="card-title">${Icons.wallet(20)} Seus ativos</h3>
-            <p class="card-desc" style="margin-bottom:0;">Carteira multi-cripto com suporte a liquidação em múltiplas redes</p>
+            <h3 class="card-title">${Icons.shield(20)} Liquidação Soberana</h3>
+            <p class="card-desc" style="margin-bottom:0;">Pix entra, DePix sai na sua carteira Liquid.</p>
           </div>
-          <span class="badge badge-amber">Multi-Ativos</span>
+          <span class="badge badge-green">Liquid Network</span>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          ${MULTI_ASSETS.map(
-            (asset) => `
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:rgba(11, 18, 32, 0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-md);">
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div style="width:34px; height:34px; border-radius:50%; background:rgba(16, 185, 129, 0.12); color:var(--accent-emerald); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.75rem;">
-                  ${asset.symbol.slice(0, 3)}
-                </div>
-                <div>
-                  <div style="display:flex; align-items:center; gap:8px;">
-                    <strong style="font-size:0.92rem; color:var(--text-main);">${asset.name}</strong>
-                    <span style="font-size:0.75rem; color:var(--text-muted);">(${asset.symbol})</span>
-                  </div>
-                  <span style="font-size:0.75rem; color:var(--text-faint);">${asset.network}</span>
-                </div>
-              </div>
-
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div style="text-align:right;">
-                  <span style="display:block; font-size:0.95rem; font-weight:700; color:var(--text-main);">R$ 0,00</span>
-                  <span style="font-size:0.7rem; color:var(--text-faint);">0.00 ${asset.symbol}</span>
-                </div>
-                <span class="badge badge-amber" style="font-size:0.65rem;">Em breve</span>
-              </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:rgba(11, 18, 32, 0.5); border:1px solid var(--border-subtle); border-radius:var(--radius-md);">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:38px; height:38px; border-radius:50%; background:rgba(16, 185, 129, 0.12); color:var(--accent-emerald); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.75rem;">
+              DPX
             </div>
-          `,
-          ).join('')}
+            <div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <strong style="font-size:0.95rem; color:var(--text-main);">DePix</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted);">(BRL 1:1)</span>
+              </div>
+              <span style="font-size:0.75rem; color:var(--text-faint);">Rede Liquid • Sidechain Bitcoin</span>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="text-align:right;">
+              <span style="display:block; font-size:0.95rem; font-weight:700; color:var(--text-main);">R$ 0,00</span>
+              <span style="font-size:0.7rem; color:var(--text-faint);">0.00 DePix</span>
+            </div>
+            <span class="badge badge-green" style="font-size:0.65rem;">Ativo Único</span>
+          </div>
         </div>
       </div>
 
-      <!-- AÇÕES RÁPIDAS (COM NOVAS OPÇÕES: PAGAR CONTAS E TROCAR) -->
+      <!-- AÇÕES RÁPIDAS -->
       <div>
         <h3 style="margin-bottom:14px; font-size:1rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">
           Ações Rápidas
@@ -100,7 +94,7 @@ export function renderInicioView(currentUser) {
             </div>
             <div>
               <strong style="display:block; color:var(--text-main); font-size:0.92rem;">Nova Cobrança</strong>
-              <span style="font-size:0.75rem; color:var(--text-muted);">Gerar Pix → DePix</span>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Pix entra → DePix sai</span>
             </div>
           </a>
 
@@ -121,16 +115,6 @@ export function renderInicioView(currentUser) {
             <div>
               <strong style="display:block; color:var(--text-main); font-size:0.92rem;">Pagar Contas</strong>
               <span style="font-size:0.75rem; color:var(--text-muted);">Boletos & Pix</span>
-            </div>
-          </a>
-
-          <a href="#/trocar" class="card" style="padding:18px; text-decoration:none; display:flex; align-items:center; gap:14px; transition:all 0.15s ease;">
-            <div style="color:var(--accent-blue); background:var(--accent-blue-subtle); padding:10px; border-radius:var(--radius-md);">
-              ${Icons.repeat(22)}
-            </div>
-            <div>
-              <strong style="display:block; color:var(--text-main); font-size:0.92rem;">Trocar (Swap)</strong>
-              <span style="font-size:0.75rem; color:var(--text-muted);">Cripto ⇄ Cripto</span>
             </div>
           </a>
 
